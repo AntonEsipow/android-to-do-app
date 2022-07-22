@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bigtoapp.todo.database.entity.NoteEntity
 import com.bigtoapp.todo.databinding.FragmentNotesBinding
 import com.bigtoapp.todo.ui.BaseFragment
+import com.bigtoapp.todo.ui.NoteEntityInterface
 
-class NotesFragment: BaseFragment() {
+class NotesFragment: BaseFragment(), NoteEntityInterface {
 
     private var _binding: FragmentNotesBinding? = null
     private val binding get() = _binding!!
@@ -24,9 +26,20 @@ class NotesFragment: BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        sharedViewModel.noteEntitiesLiveData.observe(viewLifecycleOwner) { noteEntityList ->
-            // todo
+        hideKeyboard()
+        binding.fab.setOnClickListener {
+            // todo navigateViaNAvGraph
         }
+
+        val controller = NotesEpoxyController(this)
+        binding.epoxyRecyclerView.setControllerAndBuildModels(controller)
+        sharedViewModel.notesViewStateLiveData.observe(viewLifecycleOwner) { viewState ->
+            controller.viewState = viewState
+        }
+    }
+
+    override fun onItemSelected(noteEntity: NoteEntity) {
+        TODO("Not yet implemented")
     }
 
     override fun onDestroy() {
