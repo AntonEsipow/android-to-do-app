@@ -9,6 +9,24 @@
         android:id="@+id/notesFragment"
         tools:layout="@layout/fragment_notes"
         android:label="Notes"
-        android:name="com.bigtoapp.todo.ui.notes.NotesFragment" />
+        android:name="com.bigtoapp.todo.ui.notes.NotesFragment" >
+
+        <action
+            android:id="@+id/action_notesFragment_to_addNoteEntityFragment"
+            app:destination="@id/addNoteEntityFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addNoteEntityFragment"
+        android:name="com.bigtoapp.todo.ui.notes.add.AddNoteEntityFragment"
+        android:label="Add Note"
+        tools:layout="@layout/fragment_add_note">
+
+        <argument
+            android:name="selectedItemEntityId"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
 
 </navigation>

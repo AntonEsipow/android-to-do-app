@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bigtoapp.todo.R
 import com.bigtoapp.todo.database.entity.NoteEntity
 import com.bigtoapp.todo.databinding.FragmentNotesBinding
 import com.bigtoapp.todo.ui.BaseFragment
@@ -28,7 +29,7 @@ class NotesFragment: BaseFragment(), NoteEntityInterface {
 
         hideKeyboard()
         binding.fab.setOnClickListener {
-            // todo navigateViaNAvGraph
+            navigateViaNavGraph(R.id.action_notesFragment_to_addNoteEntityFragment)
         }
 
         val controller = NotesEpoxyController(this)
@@ -39,7 +40,7 @@ class NotesFragment: BaseFragment(), NoteEntityInterface {
     }
 
     override fun onItemSelected(noteEntity: NoteEntity) {
-        TODO("Not yet implemented")
+        // todo
     }
 
     override fun onDestroy() {

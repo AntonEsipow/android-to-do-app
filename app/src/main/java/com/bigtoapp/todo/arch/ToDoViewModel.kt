@@ -16,7 +16,12 @@ class ToDoViewModel: ViewModel() {
     private lateinit var repository: ToDoRepository
 
     private val _noteEntitiesLiveData = MutableLiveData<List<NoteEntity>>()
-    val noteEntitiesLiveData: LiveData<List<NoteEntity>> get() = _noteEntitiesLiveData
+    val noteEntitiesLiveData: LiveData<List<NoteEntity>>
+        get() = _noteEntitiesLiveData
+
+    private val _transactionCompletedLiveData = MutableLiveData<Event<Boolean>>()
+    val transactionCompletedLiveData: LiveData<Event<Boolean>>
+        get() = _transactionCompletedLiveData
 
     // region Home page
     var currentSort: NotesViewState.Sort = NotesViewState.Sort.NEWEST
@@ -26,7 +31,8 @@ class ToDoViewModel: ViewModel() {
         }
 
     private val _notesViewStateLiveData = MutableLiveData<NotesViewState>()
-    val notesViewStateLiveData: LiveData<NotesViewState> get() = _notesViewStateLiveData
+    val notesViewStateLiveData: LiveData<NotesViewState>
+        get() = _notesViewStateLiveData
     // endregion Home page
 
     fun init(appDatabase: AppDatabase) {

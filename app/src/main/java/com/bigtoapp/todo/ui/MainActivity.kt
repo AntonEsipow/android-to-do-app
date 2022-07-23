@@ -15,6 +15,7 @@ import com.bigtoapp.todo.database.AppDatabase
 class MainActivity : AppCompatActivity() {
 
     lateinit var navController: NavController
+    private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +28,14 @@ class MainActivity : AppCompatActivity() {
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
+        // Define top-level Fragments
+        appBarConfiguration = AppBarConfiguration(setOf(R.id.notesFragment))
+
         // Setup top app bar
         setupActionBarWithNavController(navController)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 }

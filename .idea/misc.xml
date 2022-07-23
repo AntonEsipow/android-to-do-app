@@ -4,9 +4,12 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Anton/AndroidStudioProjects/ToDo/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Anton/AndroidStudioProjects/ToDo/app/src/main/res/layout/fragment_add_note.xml" value="0.4" />
+        <entry key="..\:/Users/Anton/AndroidStudioProjects/ToDo/app/src/main/res/layout/fragment_add_note_entity.xml" value="0.253125" />
         <entry key="..\:/Users/Anton/AndroidStudioProjects/ToDo/app/src/main/res/layout/fragment_notes.xml" value="0.20506329113924052" />
         <entry key="..\:/Users/Anton/AndroidStudioProjects/ToDo/app/src/main/res/layout/model_header_item.xml" value="0.2076923076923077" />
         <entry key="..\:/Users/Anton/AndroidStudioProjects/ToDo/app/src/main/res/layout/model_note_entity.xml" value="0.4" />
+        <entry key="..\:/Users/Anton/AndroidStudioProjects/ToDo/app/src/main/res/layout/test_note_add.xml" value="0.253125" />
       </map>
     </option>
   </component>
