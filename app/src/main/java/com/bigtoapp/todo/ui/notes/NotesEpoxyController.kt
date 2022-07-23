@@ -1,49 +1,55 @@
 package com.bigtoapp.todo.ui.notes
 
+import android.content.res.ColorStateList
+import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import com.airbnb.epoxy.EpoxyController
 import com.bigtoapp.todo.R
 import com.bigtoapp.todo.addHeaderModel
-import com.bigtoapp.todo.arch.notes.NotesViewState
+import com.bigtoapp.todo.arch.ToDoViewModel
 import com.bigtoapp.todo.database.entity.NoteEntity
 import com.bigtoapp.todo.databinding.ModelNoteEntityBinding
 import com.bigtoapp.todo.ui.NoteEntityInterface
 import com.bigtoapp.todo.ui.epoxy.ViewBindingKotlinModel
+import com.bigtoapp.todo.ui.epoxy.models.EmptyStateEpoxyModel
 
 class NotesEpoxyController(
     private val noteEntityInterface: NoteEntityInterface
 ): EpoxyController() {
 
-    var viewState: NotesViewState = NotesViewState(isLoading = true)
+    private var isLoading: Boolean = true
         set(value) {
             field = value
+            if(field) {
+                requestModelBuild()
+            }
+        }
+
+    var noteEntityList = ArrayList<NoteEntity>()
+        set(value) {
+            field = value
+            isLoading = false
             requestModelBuild()
         }
 
     override fun buildModels() {
 
-        if(viewState.isLoading) {
+        if(isLoading) {
             // todo LoadingStateEpoxyModel
             return
         }
 
-        if(viewState.dataList.isEmpty()) {
-            // todo EmptyStateEpoxyModel
+        if(noteEntityList.isEmpty()) {
+            EmptyStateEpoxyModel().id("empty_state").addTo(this)
             return
         }
 
-        viewState.dataList.forEach { dataItem ->
-            if(dataItem.isHeader) {
-                addHeaderModel(dataItem.data as String)
-                return@forEach
-            }
-
-            val noteEntity = dataItem.data as NoteEntity
-            NoteEntityEpoxyModel(noteEntity, noteEntityInterface)
-                .id(noteEntity.id)
-                .addTo(this)
+        addHeaderModel("Newest")
+        noteEntityList.forEach { note ->
+            NoteEntityEpoxyModel(note, noteEntityInterface).id(note.id).addTo(this)
         }
+
     }
 
     data class NoteEntityEpoxyModel(
@@ -62,11 +68,12 @@ class NotesEpoxyController(
                 descriptionTextView.text = noteEntity.description
             }
 
-            categoryView.setOnClickListener {
-                // todo call ChangeCategoryBottomSheet
-            }
-
             categoryNameTextView.text = "Category"
+
+            val colorRes = R.color.teal_700
+            val color = ContextCompat.getColor(root.context, colorRes)
+            categoryView.setBackgroundColor(color)
+            root.setStrokeColor(ColorStateList.valueOf(color))
 
             root.setOnClickListener {
                 noteEntityInterface.onItemSelected(noteEntity)
@@ -75,3 +82,5 @@ class NotesEpoxyController(
 
     }
 }
+
+

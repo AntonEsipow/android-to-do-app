@@ -5,14 +5,14 @@ import com.bigtoapp.todo.databinding.ModelHeaderItemBinding
 import com.bigtoapp.todo.ui.epoxy.ViewBindingKotlinModel
 
 class HeaderEpoxyModel(
-    val headerText: String
+    private val headerText: String
 ): ViewBindingKotlinModel<ModelHeaderItemBinding>(R.layout.model_header_item) {
 
     override fun ModelHeaderItemBinding.bind() {
         textView.text = headerText
     }
 
-    override fun getSpanSize(totalSpanCount: Int, position: Int, itemCount: Int): Int {
-        return totalSpanCount
-    }
+//    override fun getSpanSize(totalSpanCount: Int, position: Int, itemCount: Int): Int {
+//        return totalSpanCount
+//    }
 }

@@ -24,12 +24,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <View
+    <androidx.cardview.widget.CardView
         android:id="@+id/categoryColorView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:clipChildren="false"
         android:layout_marginHorizontal="24dp"
-        android:background="@color/teal_700"
+        app:cardBackgroundColor="@color/black"
+        app:cardCornerRadius="5dp"
         app:layout_constraintBottom_toTopOf="@+id/titleEditLayout"
         app:layout_constraintEnd_toStartOf="@+id/categoryNameTextView"
         app:layout_constraintStart_toEndOf="@+id/performDateTextView"
@@ -72,7 +74,7 @@
             android:id="@+id/descriptionEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_title" />
+            android:hint="@string/hint_description" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

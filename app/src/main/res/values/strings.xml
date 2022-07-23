@@ -4,4 +4,6 @@
     <string name="hint_description">Write something</string>
     <string name="title">Title</string>
     <string name="category_name_text_view">Category</string>
+    <string name="no_items_hint">Use the button below to add an item to your list</string>
+    <string name="no_items">No items!</string>
 </resources>
