@@ -13,6 +13,9 @@ import com.bigtoapp.todo.databinding.ModelNoteEntityBinding
 import com.bigtoapp.todo.ui.NoteEntityInterface
 import com.bigtoapp.todo.ui.epoxy.ViewBindingKotlinModel
 import com.bigtoapp.todo.ui.epoxy.models.EmptyStateEpoxyModel
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class NotesEpoxyController(
     private val noteEntityInterface: NoteEntityInterface
@@ -69,6 +72,10 @@ class NotesEpoxyController(
             }
 
             categoryNameTextView.text = "Category"
+
+            val dateFormatter = SimpleDateFormat("dd-MM-yyyy")
+            val performDate = dateFormatter.format(Date(noteEntity.performDate))
+            performDateTextView.text = performDate
 
             val colorRes = R.color.teal_700
             val color = ContextCompat.getColor(root.context, colorRes)

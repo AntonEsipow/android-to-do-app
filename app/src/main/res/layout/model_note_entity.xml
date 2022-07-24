@@ -12,9 +12,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:clipChildren="false"
-        android:minHeight="55dp">
+        android:minHeight="80dp">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/titleTextView"
@@ -40,12 +40,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="4dp"
             android:textColor="?attr/colorOnSurface"
             android:textStyle="italic"
             android:maxLines="1"
             android:ellipsize="end"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/performDateTextView"
             app:layout_constraintEnd_toStartOf="@id/categoryNameTextView"
             app:layout_constraintStart_toStartOf="@id/titleTextView"
             app:layout_constraintTop_toBottomOf="@id/titleTextView"
@@ -59,7 +58,7 @@
             android:layout_marginBottom="4dp"
             android:textColor="?attr/colorOnBackground"
             android:textStyle="italic"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/performDateTextView"
             app:layout_constraintEnd_toStartOf="@id/categoryView"
             tools:text="Book" />
 
@@ -72,6 +71,26 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:background="@color/teal_700" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/performDateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/descriptionTextView"
+            app:layout_constraintTop_toBottomOf="@id/descriptionTextView"
+            android:text="Perform date:"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/performDateTextView"
+            app:layout_constraintBottom_toBottomOf="@id/performDateTextView"
+            app:layout_constraintTop_toTopOf="@id/performDateTextView"
+            android:text="27/07/2022"
+            android:layout_marginStart="8dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

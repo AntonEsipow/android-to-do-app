@@ -1,7 +1,6 @@
 package com.bigtoapp.todo.ui.notes.add
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.navigation.fragment.navArgs
@@ -9,7 +8,6 @@ import com.bigtoapp.todo.R
 import com.bigtoapp.todo.database.entity.NoteEntity
 import com.bigtoapp.todo.databinding.FragmentAddNoteBinding
 import com.bigtoapp.todo.ui.BaseFragment
-import com.bigtoapp.todo.ui.MainActivity
 import com.google.android.material.datepicker.MaterialDatePicker
 import java.text.SimpleDateFormat
 import java.util.*
@@ -44,6 +42,8 @@ class AddNoteEntityFragment: BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val currentDate = System.currentTimeMillis()
+        binding.performedDateTextView.text = dateFormatter(currentDate)
 
         showKeyboard()
         sharedViewModel.transactionCompletedLiveData.observe(viewLifecycleOwner) { event ->
@@ -73,11 +73,15 @@ class AddNoteEntityFragment: BaseFragment() {
         if(noteDescription?.isEmpty() == true) {
             noteDescription = null
         }
+        val dateFormat = SimpleDateFormat("dd-MM-yyyy")
+        val date = binding.performedDateTextView.text.toString()
+        val notePerformDate: Long = dateFormat.parse(date).time
 
         if(isInEditMode) {
             val noteEntity = selectedNoteEntity!!.copy(
                 title = noteTitle,
                 description = noteDescription,
+                performDate = notePerformDate
             )
             sharedViewModel.updateNote(noteEntity)
             return
@@ -87,6 +91,7 @@ class AddNoteEntityFragment: BaseFragment() {
             id = UUID.randomUUID().toString(),
             title = noteTitle,
             description = noteDescription,
+            performDate = notePerformDate,
             createdAt = System.currentTimeMillis()
         )
         sharedViewModel.insertNote(noteEntity)
@@ -96,6 +101,7 @@ class AddNoteEntityFragment: BaseFragment() {
         binding.titleEditText.text = null
         binding.titleEditText.requestFocus()
         binding.descriptionEditText.text = null
+        binding.performedDateTextView.text = dateFormatter(System.currentTimeMillis())
         Toast.makeText(requireActivity(), "Note successfully added!", Toast.LENGTH_SHORT).show()
     }
 
@@ -106,7 +112,8 @@ class AddNoteEntityFragment: BaseFragment() {
             binding.titleEditText.setText(noteEntity.title)
             binding.titleEditText.setSelection(noteEntity.title.length)
             binding.descriptionEditText.setText(noteEntity.description)
-            mainActivity.supportActionBar?.title = "Update item"
+            binding.performedDateTextView.setText(dateFormatter(noteEntity.performDate))
+            mainActivity.supportActionBar?.title = "Update note"
         }
     }
 
@@ -128,6 +135,7 @@ class AddNoteEntityFragment: BaseFragment() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
     private fun onMenuAddClicked() {
         saveNoteEntityToTheDatabase()
         if(isInEditMode) {
@@ -138,7 +146,7 @@ class AddNoteEntityFragment: BaseFragment() {
     }
 
 
-    private fun onPickDate() {
+    private fun onPickDate(){
         hideKeyboard()
         val datePicker =
             MaterialDatePicker.Builder.datePicker()
@@ -150,9 +158,8 @@ class AddNoteEntityFragment: BaseFragment() {
         // Setting up the event for when ok is clicked
         datePicker.addOnPositiveButtonClickListener {
             // formatting date in dd-mm-yyyy format.
-            val dateFormatter = SimpleDateFormat("dd-MM-yyyy")
-            val date = dateFormatter.format(Date(it))
-            Log.i("TAG", "date $it")
+            val date = dateFormatter(it)
+            binding.performedDateTextView.text = date
             Toast.makeText(requireActivity(), "$date is selected", Toast.LENGTH_LONG).show()
         }
         // Setting up the event for when cancelled is clicked
@@ -163,6 +170,11 @@ class AddNoteEntityFragment: BaseFragment() {
         datePicker.addOnCancelListener {
             Toast.makeText(requireActivity(), "Date Picker Cancelled", Toast.LENGTH_LONG).show()
         }
+    }
+
+    private fun dateFormatter(date: Long): String {
+        val dateFormatter = SimpleDateFormat("dd-MM-yyyy")
+        return dateFormatter.format(Date(date))
     }
 
     override fun onDestroyView() {
