@@ -1,6 +1,7 @@
 package com.bigtoapp.todo.ui.notes.add
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.navigation.fragment.navArgs
@@ -8,9 +9,10 @@ import com.bigtoapp.todo.R
 import com.bigtoapp.todo.database.entity.NoteEntity
 import com.bigtoapp.todo.databinding.FragmentAddNoteBinding
 import com.bigtoapp.todo.ui.BaseFragment
+import com.bigtoapp.todo.ui.MainActivity
+import com.google.android.material.datepicker.MaterialDatePicker
+import java.text.SimpleDateFormat
 import java.util.*
-
-private const val MY_HINT= "Title"
 
 class AddNoteEntityFragment: BaseFragment() {
 
@@ -114,16 +116,52 @@ class AddNoteEntityFragment: BaseFragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return if(item.itemId == R.id.menuItemAdd) {
-            saveNoteEntityToTheDatabase()
-            if(isInEditMode) {
-                Toast.makeText(requireActivity(), "Updated!", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(requireActivity(), "Added!", Toast.LENGTH_SHORT).show()
+        return when(item.itemId) {
+            R.id.menuItemAdd -> {
+                onMenuAddClicked()
+                true
             }
-            true
+            R.id.menuEditPerformDate -> {
+                onPickDate()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+    private fun onMenuAddClicked() {
+        saveNoteEntityToTheDatabase()
+        if(isInEditMode) {
+            Toast.makeText(requireActivity(), "Updated!", Toast.LENGTH_SHORT).show()
         } else {
-            return super.onOptionsItemSelected(item)
+            Toast.makeText(requireActivity(), "Added!", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+
+    private fun onPickDate() {
+        hideKeyboard()
+        val datePicker =
+            MaterialDatePicker.Builder.datePicker()
+                .setTitleText("Select perform date")
+                .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+                .build()
+
+        datePicker.show(parentFragmentManager, "MATERIAL_DATE_PICKER")
+        // Setting up the event for when ok is clicked
+        datePicker.addOnPositiveButtonClickListener {
+            // formatting date in dd-mm-yyyy format.
+            val dateFormatter = SimpleDateFormat("dd-MM-yyyy")
+            val date = dateFormatter.format(Date(it))
+            Log.i("TAG", "date $it")
+            Toast.makeText(requireActivity(), "$date is selected", Toast.LENGTH_LONG).show()
+        }
+        // Setting up the event for when cancelled is clicked
+        datePicker.addOnNegativeButtonClickListener {
+            Toast.makeText(requireActivity(), "${datePicker.headerText} is cancelled", Toast.LENGTH_LONG).show()
+        }
+        // Setting up the event for when back button is pressed
+        datePicker.addOnCancelListener {
+            Toast.makeText(requireActivity(), "Date Picker Cancelled", Toast.LENGTH_LONG).show()
         }
     }
 
