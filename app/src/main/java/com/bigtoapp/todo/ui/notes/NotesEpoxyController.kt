@@ -1,6 +1,7 @@
 package com.bigtoapp.todo.ui.notes
 
 import android.content.res.ColorStateList
+import android.graphics.Color.red
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
@@ -75,7 +76,11 @@ class NotesEpoxyController(
 
             val dateFormatter = SimpleDateFormat("dd-MM-yyyy")
             val performDate = dateFormatter.format(Date(noteEntity.performDate))
-            performDateTextView.text = performDate
+            val currentDate = dateFormatter.format(Date(System.currentTimeMillis()))
+            performDateText.text = performDate
+            if(performDateText.text == currentDate) {
+                performDateText.setTextColor(ContextCompat.getColor(root.context, R.color.red))
+            }
 
             val colorRes = R.color.teal_700
             val color = ContextCompat.getColor(root.context, colorRes)
