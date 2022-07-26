@@ -132,6 +132,10 @@ class AddNoteEntityFragment: BaseFragment() {
                 onPickDate()
                 true
             }
+            R.id.menuEditCategory -> {
+                Toast.makeText(requireActivity(), "Select category", Toast.LENGTH_SHORT).show()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

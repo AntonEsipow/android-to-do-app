@@ -1,6 +1,7 @@
 package com.bigtoapp.todo.arch
 
 import com.bigtoapp.todo.database.AppDatabase
+import com.bigtoapp.todo.database.entity.CategoryEntity
 import com.bigtoapp.todo.database.entity.NoteEntity
 import kotlinx.coroutines.flow.Flow
 import java.lang.Appendable
@@ -25,4 +26,22 @@ class ToDoRepository(
         return appDatabase.noteEntityDao().getAllNoteEntities()
     }
     // endregion NoteEntity
+
+    // region CategoryEntity
+    suspend fun insertCategory(categoryEntity: CategoryEntity) {
+        appDatabase.categoryEntityDao().insert(categoryEntity)
+    }
+
+    suspend fun deleteCategory(categoryEntity: CategoryEntity) {
+        appDatabase.categoryEntityDao().delete(categoryEntity)
+    }
+
+    suspend fun updateCategory(categoryEntity: CategoryEntity) {
+        appDatabase.categoryEntityDao().update(categoryEntity)
+    }
+
+    fun getAllCategories(): Flow<List<CategoryEntity>> {
+        return appDatabase.categoryEntityDao().getAllCategoryEntities()
+    }
+    // endregion CategoryEntity
 }

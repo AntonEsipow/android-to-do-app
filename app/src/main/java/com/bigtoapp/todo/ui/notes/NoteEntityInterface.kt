@@ -1,4 +1,4 @@
-package com.bigtoapp.todo.ui
+package com.bigtoapp.todo.ui.notes
 
 import com.bigtoapp.todo.database.entity.NoteEntity
 

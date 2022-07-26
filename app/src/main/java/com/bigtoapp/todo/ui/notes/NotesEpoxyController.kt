@@ -1,17 +1,14 @@
 package com.bigtoapp.todo.ui.notes
 
 import android.content.res.ColorStateList
-import android.graphics.Color.red
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import com.airbnb.epoxy.EpoxyController
 import com.bigtoapp.todo.R
 import com.bigtoapp.todo.addHeaderModel
-import com.bigtoapp.todo.arch.ToDoViewModel
 import com.bigtoapp.todo.database.entity.NoteEntity
 import com.bigtoapp.todo.databinding.ModelNoteEntityBinding
-import com.bigtoapp.todo.ui.NoteEntityInterface
 import com.bigtoapp.todo.ui.epoxy.ViewBindingKotlinModel
 import com.bigtoapp.todo.ui.epoxy.models.EmptyStateEpoxyModel
 import com.bigtoapp.todo.ui.epoxy.models.LoadingEpoxyModel

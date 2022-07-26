@@ -4,10 +4,17 @@
 
     <item
         app:showAsAction="always"
-        android:title="PerformDate"
+        android:title="Perform Date"
         android:icon="@drawable/ic_edit_date_24"
         android:id="@+id/menuEditPerformDate"
         android:iconTint="@color/white"/>
+
+    <item
+        app:showAsAction="always"
+        android:title="Category"
+        android:icon="@drawable/ic_category_24"
+        android:iconTint="@color/white"
+        android:id="@+id/menuEditCategory"/>
 
     <item
         app:showAsAction="always"

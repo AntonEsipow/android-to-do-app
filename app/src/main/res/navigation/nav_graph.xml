@@ -33,7 +33,25 @@
         android:id="@+id/nav_category"
         android:name="com.bigtoapp.todo.ui.category.CategoryFragment"
         android:label="Category"
-        tools:layout="@layout/fragment_category"/>
+        tools:layout="@layout/fragment_category">
+
+        <action
+            android:id="@+id/action_categoryFragment_to_addCategoryEntityFragment"
+            app:destination="@id/nav_add_category"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_add_category"
+        android:name="com.bigtoapp.todo.ui.category.add.AddCategoryEntityFragment"
+        android:label="Add Category"
+        tools:layout="@layout/fragment_add_category">
+
+        <argument
+            android:name="selectedCategoryEntityId"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_settings"

@@ -9,7 +9,6 @@ import com.bigtoapp.todo.R
 import com.bigtoapp.todo.database.entity.NoteEntity
 import com.bigtoapp.todo.databinding.FragmentNotesBinding
 import com.bigtoapp.todo.ui.BaseFragment
-import com.bigtoapp.todo.ui.NoteEntityInterface
 
 class NotesFragment: BaseFragment(), NoteEntityInterface {
 
