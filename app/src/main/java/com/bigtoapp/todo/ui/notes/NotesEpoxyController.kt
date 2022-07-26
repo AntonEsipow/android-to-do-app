@@ -14,6 +14,7 @@ import com.bigtoapp.todo.databinding.ModelNoteEntityBinding
 import com.bigtoapp.todo.ui.NoteEntityInterface
 import com.bigtoapp.todo.ui.epoxy.ViewBindingKotlinModel
 import com.bigtoapp.todo.ui.epoxy.models.EmptyStateEpoxyModel
+import com.bigtoapp.todo.ui.epoxy.models.LoadingEpoxyModel
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -40,7 +41,7 @@ class NotesEpoxyController(
     override fun buildModels() {
 
         if(isLoading) {
-            // todo LoadingStateEpoxyModel
+            LoadingEpoxyModel().id("loading_state").addTo(this)
             return
         }
 

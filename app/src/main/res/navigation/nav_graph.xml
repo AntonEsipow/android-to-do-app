@@ -3,21 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/notesFragment">
+    app:startDestination="@id/nav_notes">
 
     <fragment
-        android:id="@+id/notesFragment"
+        android:id="@+id/nav_notes"
         tools:layout="@layout/fragment_notes"
         android:label="Notes"
         android:name="com.bigtoapp.todo.ui.notes.NotesFragment" >
 
         <action
             android:id="@+id/action_notesFragment_to_addNoteEntityFragment"
-            app:destination="@id/addNoteEntityFragment" />
+            app:destination="@id/nav_add_note" />
     </fragment>
 
     <fragment
-        android:id="@+id/addNoteEntityFragment"
+        android:id="@+id/nav_add_note"
         android:name="com.bigtoapp.todo.ui.notes.add.AddNoteEntityFragment"
         android:label="Add Note"
         tools:layout="@layout/fragment_add_note">
@@ -28,5 +28,17 @@
             app:nullable="true"
             android:defaultValue="@null" />
     </fragment>
+
+    <fragment
+        android:id="@+id/nav_category"
+        android:name="com.bigtoapp.todo.ui.category.CategoryFragment"
+        android:label="Category"
+        tools:layout="@layout/fragment_category"/>
+
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.bigtoapp.todo.ui.settings.SettingsFragment"
+        android:label="Settings"
+        tools:layout="@layout/fragment_settings"/>
 
 </navigation>
