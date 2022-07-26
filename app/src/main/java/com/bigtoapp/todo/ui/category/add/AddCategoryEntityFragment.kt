@@ -1,14 +1,18 @@
 package com.bigtoapp.todo.ui.category.add
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.*
+import android.widget.SeekBar
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.bigtoapp.todo.R
 import com.bigtoapp.todo.database.entity.CategoryEntity
 import com.bigtoapp.todo.database.entity.NoteEntity
 import com.bigtoapp.todo.databinding.FragmentAddCategoryBinding
 import com.bigtoapp.todo.ui.BaseFragment
+import com.bigtoapp.todo.ui.category.color.CustomColorPickerViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -23,12 +27,30 @@ class AddCategoryEntityFragment: BaseFragment() {
             it.id == safeArgs.selectedCategoryEntityId
         }
     }
+    private val viewModel: CustomColorPickerViewModel by viewModels()
 
     private var isInEditMode: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+    }
+
+    private class SeekBarListener(
+        private val onProgressChange: (Int) -> Unit
+    ) : SeekBar.OnSeekBarChangeListener {
+
+        override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+            onProgressChange(progress)
+        }
+
+        override fun onStartTrackingTouch(seekBar: SeekBar?) {
+            // Nothing to do
+        }
+
+        override fun onStopTrackingTouch(seekBar: SeekBar?) {
+            // Nothing to do
+        }
     }
 
     override fun onCreateView(
@@ -53,6 +75,36 @@ class AddCategoryEntityFragment: BaseFragment() {
         // Setup screen if we are in edit mode
         binding.categoryNameText.requestFocus()
         setupSelectedCategoryEntity()
+
+        if(isInEditMode) {
+            viewModel.setCategoryColorName(selectedCategoryEntity!!.color, selectedCategoryEntity!!.name) { red, green, blue ->
+                binding.customColorPicker.redColorLayout.seekBar.progress = red
+                binding.customColorPicker.greenColorLayout.seekBar.progress = green
+                binding.customColorPicker.blueColorLayout.seekBar.progress = blue
+            }
+        }
+
+        binding.customColorPicker.redColorLayout.apply {
+            colorSliderTextView.text = "Red"
+            seekBar.setOnSeekBarChangeListener(SeekBarListener(viewModel::onRedChange))
+        }
+
+        binding.customColorPicker.greenColorLayout.apply {
+            colorSliderTextView.text = "Green"
+            seekBar.setOnSeekBarChangeListener(SeekBarListener(viewModel::onGreenChange))
+        }
+
+        binding.customColorPicker.blueColorLayout.apply {
+            colorSliderTextView.text = "Blue"
+            seekBar.setOnSeekBarChangeListener(SeekBarListener(viewModel::onBlueChange))
+        }
+
+        viewModel.colorViewStateLiveData.observe(viewLifecycleOwner) { viewState ->
+            binding.customColorPicker.titleTextView.text = viewState.getFormattedTitle()
+
+            val color = Color.rgb(viewState.red, viewState.green, viewState.blue)
+            binding.customColorPicker.colorView.setBackgroundColor(color)
+        }
     }
 
     private fun saveCategoryEntityToTheDatabase() {
@@ -64,9 +116,12 @@ class AddCategoryEntityFragment: BaseFragment() {
             binding.categoryNameText.error = null
         }
 
+        val color = setColorIfIsNull()
+
         if(isInEditMode) {
             val categoryEntity = selectedCategoryEntity!!.copy(
-                name = categoryName
+                name = categoryName,
+                color = color
             )
             sharedViewModel.updateCategory(categoryEntity)
             return
@@ -74,7 +129,8 @@ class AddCategoryEntityFragment: BaseFragment() {
 
         val categoryEntity = CategoryEntity(
             id = UUID.randomUUID().toString(),
-            name = categoryName
+            name = categoryName,
+            color = color
         )
         sharedViewModel.insertCategory(categoryEntity)
         Toast.makeText(requireActivity(), "Category successfully added!", Toast.LENGTH_SHORT).show()
@@ -110,6 +166,13 @@ class AddCategoryEntityFragment: BaseFragment() {
             Toast.makeText(requireActivity(), "Updated!", Toast.LENGTH_SHORT).show()
         } else {
             Toast.makeText(requireActivity(), "Added!", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun setColorIfIsNull(): Int {
+        return when(val viewState = viewModel.colorViewStateLiveData.value) {
+            null -> Color.rgb(243, 243, 243)
+            else -> Color.rgb(viewState.red, viewState.green, viewState.blue)
         }
     }
 

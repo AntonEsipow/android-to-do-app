@@ -1,17 +1,17 @@
 package com.bigtoapp.todo.ui.category
 
 import android.content.res.ColorStateList
+import android.graphics.Color
 import androidx.core.content.ContextCompat
 import com.airbnb.epoxy.EpoxyController
 import com.bigtoapp.todo.R
 import com.bigtoapp.todo.addHeaderModel
 import com.bigtoapp.todo.database.entity.CategoryEntity
-import com.bigtoapp.todo.database.entity.NoteEntity
 import com.bigtoapp.todo.databinding.ModelCategoryEntityBinding
 import com.bigtoapp.todo.ui.epoxy.ViewBindingKotlinModel
 import com.bigtoapp.todo.ui.epoxy.models.EmptyStateEpoxyModel
 import com.bigtoapp.todo.ui.epoxy.models.LoadingEpoxyModel
-import com.bigtoapp.todo.ui.notes.NotesEpoxyController
+import kotlin.math.roundToInt
 
 class CategoryEpoxyController(
     private val categoryEntityInterface: CategoryEntityInterface
@@ -60,15 +60,12 @@ class CategoryEpoxyController(
 
             nameCategoryText.text = categoryEntity.name
 
-            val colorRes = R.color.teal_700
-            val color = ContextCompat.getColor(root.context, colorRes)
-            categoryView.setBackgroundColor(color)
-            root.setStrokeColor(ColorStateList.valueOf(color))
+            categoryView.setBackgroundColor(categoryEntity.color)
+            root.setStrokeColor(ColorStateList.valueOf(categoryEntity.color))
 
             root.setOnClickListener {
                 categoryEntityInterface.onCategorySelected(categoryEntity)
             }
         }
-
     }
 }
