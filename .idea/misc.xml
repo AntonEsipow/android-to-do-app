@@ -8,6 +8,7 @@
         <entry key="..\:/Users/Anton/AndroidStudioProjects/ToDo/app/src/main/res/layout/activity_main_drawer.xml" value="0.253125" />
         <entry key="..\:/Users/Anton/AndroidStudioProjects/ToDo/app/src/main/res/layout/app_bar_main.xml" value="0.253125" />
         <entry key="..\:/Users/Anton/AndroidStudioProjects/ToDo/app/src/main/res/layout/content_main.xml" value="0.253125" />
+        <entry key="..\:/Users/Anton/AndroidStudioProjects/ToDo/app/src/main/res/layout/custom_color_picker.xml" value="0.253125" />
         <entry key="..\:/Users/Anton/AndroidStudioProjects/ToDo/app/src/main/res/layout/dialog_pick_up_date.xml" value="0.2076923076923077" />
         <entry key="..\:/Users/Anton/AndroidStudioProjects/ToDo/app/src/main/res/layout/epoxy_model_loading.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Anton/AndroidStudioProjects/ToDo/app/src/main/res/layout/fragment_add_category.xml" value="0.253125" />
@@ -16,6 +17,7 @@
         <entry key="..\:/Users/Anton/AndroidStudioProjects/ToDo/app/src/main/res/layout/fragment_category.xml" value="0.1876068376068376" />
         <entry key="..\:/Users/Anton/AndroidStudioProjects/ToDo/app/src/main/res/layout/fragment_notes.xml" value="0.20506329113924052" />
         <entry key="..\:/Users/Anton/AndroidStudioProjects/ToDo/app/src/main/res/layout/fragment_settings.xml" value="0.253125" />
+        <entry key="..\:/Users/Anton/AndroidStudioProjects/ToDo/app/src/main/res/layout/layout_color_picker_slider.xml" value="0.253125" />
         <entry key="..\:/Users/Anton/AndroidStudioProjects/ToDo/app/src/main/res/layout/model_category_entity.xml" value="0.253125" />
         <entry key="..\:/Users/Anton/AndroidStudioProjects/ToDo/app/src/main/res/layout/model_empty_state.xml" value="0.23504273504273504" />
         <entry key="..\:/Users/Anton/AndroidStudioProjects/ToDo/app/src/main/res/layout/model_header_item.xml" value="0.2076923076923077" />

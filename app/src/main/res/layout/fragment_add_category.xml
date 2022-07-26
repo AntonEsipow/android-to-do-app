@@ -29,14 +29,21 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="Here will be view to select category color"
-        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/categoryNameEditLayout"
+        android:text="Choose color"
+        android:layout_margin="16dp"
+        android:textSize="18sp"
         android:textStyle="bold"
-        android:textColor="@color/black"/>
+        android:id="@+id/chooseColorTextView"/>
+
+    <include
+        layout="@layout/layout_custom_color_picker"
+        app:layout_constraintTop_toBottomOf="@+id/chooseColorTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
