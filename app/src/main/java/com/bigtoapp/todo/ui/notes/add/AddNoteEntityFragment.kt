@@ -1,14 +1,20 @@
 package com.bigtoapp.todo.ui.notes.add
 
+import android.graphics.Color
+import android.os.Binder
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
+import com.airbnb.epoxy.EpoxyRecyclerView
 import com.bigtoapp.todo.R
+import com.bigtoapp.todo.database.entity.CategoryEntity
 import com.bigtoapp.todo.database.entity.NoteEntity
 import com.bigtoapp.todo.databinding.FragmentAddNoteBinding
 import com.bigtoapp.todo.ui.BaseFragment
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -58,6 +64,15 @@ class AddNoteEntityFragment: BaseFragment() {
         binding.titleEditText.requestFocus()
         // Setup screen if we are in edit mode
         setupSelectedItemEntity()
+        val categoryViewStateEpoxyController = CategoryViewStateEpoxyController { categoryId ->
+            sharedViewModel.onCategorySelected(categoryId)
+        }
+        binding.categoriesEpoxyRecyclerView.setController(categoryViewStateEpoxyController)
+        sharedViewModel.onCategorySelected(selectedNoteEntity?.categoryId ?: CategoryEntity.DEFAULT_CATEGORY_ID, true)
+        sharedViewModel.categoriesViewStateLiveData.observe(viewLifecycleOwner) { viewState ->
+            categoryViewStateEpoxyController.viewState = viewState
+        }
+
     }
 
     private fun saveNoteEntityToTheDatabase() {
@@ -68,6 +83,7 @@ class AddNoteEntityFragment: BaseFragment() {
         } else {
             binding.titleEditText.error = null
         }
+        val itemCategoryId = sharedViewModel.categoriesViewStateLiveData.value?.getSelectedCategoryId() ?: return
 
         var noteDescription: String? = binding.descriptionEditText.text.toString().trim()
         if(noteDescription?.isEmpty() == true) {
@@ -81,7 +97,8 @@ class AddNoteEntityFragment: BaseFragment() {
             val noteEntity = selectedNoteEntity!!.copy(
                 title = noteTitle,
                 description = noteDescription,
-                performDate = notePerformDate
+                performDate = notePerformDate,
+                categoryId = itemCategoryId
             )
             sharedViewModel.updateNote(noteEntity)
             return
@@ -92,7 +109,8 @@ class AddNoteEntityFragment: BaseFragment() {
             title = noteTitle,
             description = noteDescription,
             performDate = notePerformDate,
-            createdAt = System.currentTimeMillis()
+            createdAt = System.currentTimeMillis(),
+            categoryId = itemCategoryId
         )
         sharedViewModel.insertNote(noteEntity)
     }
@@ -133,7 +151,7 @@ class AddNoteEntityFragment: BaseFragment() {
                 true
             }
             R.id.menuEditCategory -> {
-                Toast.makeText(requireActivity(), "Select category", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireActivity(), "Select category!", Toast.LENGTH_SHORT).show()
                 true
             }
             else -> super.onOptionsItemSelected(item)

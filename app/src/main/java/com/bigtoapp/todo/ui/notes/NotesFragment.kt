@@ -34,8 +34,8 @@ class NotesFragment: BaseFragment(), NoteEntityInterface {
 
         val controller = NotesEpoxyController(this)
         binding.epoxyRecyclerView.setControllerAndBuildModels(controller)
-        sharedViewModel.noteEntitiesLiveData.observe(viewLifecycleOwner) { noteEntityList ->
-            controller.noteEntityList = noteEntityList as ArrayList<NoteEntity>
+        sharedViewModel.noteWithCategoryEntityLiveData.observe(viewLifecycleOwner) { notes ->
+            controller.notes = notes
         }
 
         // Setup swipe-to-delete
@@ -51,7 +51,7 @@ class NotesFragment: BaseFragment(), NoteEntityInterface {
                     direction: Int
                 ) {
                     val noteThatWasRemoved = model?.noteEntity ?: return
-                    sharedViewModel.deleteNote(noteThatWasRemoved)
+                    sharedViewModel.deleteNote(noteThatWasRemoved.noteEntity)
                 }
             })
     }

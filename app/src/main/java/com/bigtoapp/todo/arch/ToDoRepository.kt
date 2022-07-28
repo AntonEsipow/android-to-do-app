@@ -3,6 +3,7 @@ package com.bigtoapp.todo.arch
 import com.bigtoapp.todo.database.AppDatabase
 import com.bigtoapp.todo.database.entity.CategoryEntity
 import com.bigtoapp.todo.database.entity.NoteEntity
+import com.bigtoapp.todo.database.entity.NoteWithCategoryEntity
 import kotlinx.coroutines.flow.Flow
 import java.lang.Appendable
 
@@ -24,6 +25,10 @@ class ToDoRepository(
 
     fun getAllNotes(): Flow<List<NoteEntity>> {
         return appDatabase.noteEntityDao().getAllNoteEntities()
+    }
+
+    fun getAllNotesWithCategoryEntities(): Flow<List<NoteWithCategoryEntity>> {
+        return appDatabase.noteEntityDao().getAllNotesWithCategoryEntities()
     }
     // endregion NoteEntity
 

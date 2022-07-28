@@ -8,6 +8,7 @@ import com.airbnb.epoxy.EpoxyController
 import com.bigtoapp.todo.R
 import com.bigtoapp.todo.addHeaderModel
 import com.bigtoapp.todo.database.entity.NoteEntity
+import com.bigtoapp.todo.database.entity.NoteWithCategoryEntity
 import com.bigtoapp.todo.databinding.ModelNoteEntityBinding
 import com.bigtoapp.todo.ui.epoxy.ViewBindingKotlinModel
 import com.bigtoapp.todo.ui.epoxy.models.EmptyStateEpoxyModel
@@ -28,7 +29,7 @@ class NotesEpoxyController(
             }
         }
 
-    var noteEntityList = ArrayList<NoteEntity>()
+    var notes: List<NoteWithCategoryEntity> = emptyList()
         set(value) {
             field = value
             isLoading = false
@@ -42,38 +43,38 @@ class NotesEpoxyController(
             return
         }
 
-        if(noteEntityList.isEmpty()) {
+        if(notes.isEmpty()) {
             EmptyStateEpoxyModel().id("empty_state").addTo(this)
             return
         }
 
         addHeaderModel("Newest")
-        noteEntityList.forEach { note ->
-            NoteEntityEpoxyModel(note, noteEntityInterface).id(note.id).addTo(this)
+        notes.forEach { note ->
+            NoteEntityEpoxyModel(note, noteEntityInterface).id(note.noteEntity.id).addTo(this)
         }
 
     }
 
     data class NoteEntityEpoxyModel(
-        val noteEntity: NoteEntity,
+        val noteEntity: NoteWithCategoryEntity,
         val noteEntityInterface: NoteEntityInterface
     ): ViewBindingKotlinModel<ModelNoteEntityBinding>(R.layout.model_note_entity) {
 
         override fun ModelNoteEntityBinding.bind() {
 
-            titleTextView.text = noteEntity.title
+            titleTextView.text = noteEntity.noteEntity.title
 
-            if(noteEntity.description == null) {
+            if(noteEntity.noteEntity.description == null) {
                 descriptionTextView.isGone = true
             } else {
                 descriptionTextView.isVisible = true
-                descriptionTextView.text = noteEntity.description
+                descriptionTextView.text = noteEntity.noteEntity.description
             }
 
-            categoryNameTextView.text = "Category"
+            categoryNameTextView.text = noteEntity.categoryEntity?.name
 
             val dateFormatter = SimpleDateFormat("dd-MM-yyyy")
-            val performDate = dateFormatter.format(Date(noteEntity.performDate))
+            val performDate = dateFormatter.format(Date(noteEntity.noteEntity.performDate))
             val currentDate = dateFormatter.format(Date(System.currentTimeMillis()))
             performDateText.text = performDate
             if(performDateText.text == currentDate) {
@@ -86,7 +87,7 @@ class NotesEpoxyController(
             root.setStrokeColor(ColorStateList.valueOf(color))
 
             root.setOnClickListener {
-                noteEntityInterface.onItemSelected(noteEntity)
+                noteEntityInterface.onItemSelected(noteEntity.noteEntity)
             }
         }
 

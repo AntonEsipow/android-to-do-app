@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -42,18 +43,20 @@
         app:layout_constraintEnd_toStartOf="@+id/categoryNameTextView"
         app:layout_constraintTop_toTopOf="@+id/performedDateTextView"/>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/categoryColorView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+    <com.airbnb.epoxy.EpoxyRecyclerView
+        android:id="@+id/categoriesEpoxyRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:clipChildren="false"
-        android:layout_marginHorizontal="24dp"
-        app:cardBackgroundColor="@color/teal_700"
-        app:cardCornerRadius="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/performTextView"
-        app:layout_constraintStart_toEndOf="@+id/performTextView"
-        app:layout_constraintEnd_toStartOf="@+id/categoryTextView"
-        app:layout_constraintTop_toTopOf="@+id/performedDateTextView" />
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:paddingVertical="8dp"
+        app:itemSpacing="12dp"
+        app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+        app:layout_constraintTop_toBottomOf="@+id/performedDateTextView"
+        app:spanCount="1"
+        tools:listitem="@layout/model_category_item_selection" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/titleEditLayout"
@@ -63,7 +66,7 @@
         app:errorEnabled="true"
         app:hintEnabled="false"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/performTextView">
+        app:layout_constraintTop_toBottomOf="@+id/categoriesEpoxyRecyclerView">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/titleEditText"
