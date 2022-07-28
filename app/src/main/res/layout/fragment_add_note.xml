@@ -43,20 +43,7 @@
         app:layout_constraintEnd_toStartOf="@+id/categoryNameTextView"
         app:layout_constraintTop_toTopOf="@+id/performedDateTextView"/>
 
-    <com.airbnb.epoxy.EpoxyRecyclerView
-        android:id="@+id/categoriesEpoxyRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clipChildren="false"
-        android:orientation="horizontal"
-        android:paddingHorizontal="16dp"
-        android:layout_marginTop="16dp"
-        android:paddingVertical="8dp"
-        app:itemSpacing="12dp"
-        app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-        app:layout_constraintTop_toBottomOf="@+id/performedDateTextView"
-        app:spanCount="1"
-        tools:listitem="@layout/model_category_item_selection" />
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/titleEditLayout"
@@ -66,7 +53,7 @@
         app:errorEnabled="true"
         app:hintEnabled="false"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/categoriesEpoxyRecyclerView">
+        app:layout_constraintTop_toBottomOf="@+id/performTextView">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/titleEditText"

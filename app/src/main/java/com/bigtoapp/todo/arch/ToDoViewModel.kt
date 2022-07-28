@@ -98,7 +98,7 @@ class ToDoViewModel: ViewModel() {
             return itemList.find { it.isSelected }?.categoryEntity?.id ?: CategoryEntity.DEFAULT_CATEGORY_ID
         }
         fun getSelectedCategoryName(): String {
-            return itemList.find { it.isSelected }!!.categoryEntity.name
+            return itemList.find { it.isSelected }?.categoryEntity?.name ?: CategoryEntity.getDefaultCategory().name
         }
     }
 

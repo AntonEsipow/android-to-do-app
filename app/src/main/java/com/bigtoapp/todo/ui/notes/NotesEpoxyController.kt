@@ -81,8 +81,8 @@ class NotesEpoxyController(
                 performDateText.setTextColor(ContextCompat.getColor(root.context, R.color.red))
             }
 
-            val colorRes = R.color.teal_700
-            val color = ContextCompat.getColor(root.context, colorRes)
+            val colorRes = R.color.white
+            val color = noteEntity.categoryEntity?.color ?: ContextCompat.getColor(root.context, colorRes)
             categoryView.setBackgroundColor(color)
             root.setStrokeColor(ColorStateList.valueOf(color))
 

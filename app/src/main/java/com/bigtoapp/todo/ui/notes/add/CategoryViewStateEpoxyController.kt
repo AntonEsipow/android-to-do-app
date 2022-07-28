@@ -41,6 +41,7 @@ class CategoryViewStateEpoxyController(
         override fun ModelCategoryItemSelectionBinding.bind() {
 
             textView.text = item.categoryEntity.name
+            categoryView.setBackgroundColor(item.categoryEntity.color)
             root.setOnClickListener { onCategorySelected(item.categoryEntity.id) }
 
             val colorRes = if (item.isSelected) R.attr.colorSecondary else R.attr.colorOnSurface

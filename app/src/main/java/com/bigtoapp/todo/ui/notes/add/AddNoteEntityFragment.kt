@@ -64,15 +64,6 @@ class AddNoteEntityFragment: BaseFragment() {
         binding.titleEditText.requestFocus()
         // Setup screen if we are in edit mode
         setupSelectedItemEntity()
-        val categoryViewStateEpoxyController = CategoryViewStateEpoxyController { categoryId ->
-            sharedViewModel.onCategorySelected(categoryId)
-        }
-        binding.categoriesEpoxyRecyclerView.setController(categoryViewStateEpoxyController)
-        sharedViewModel.onCategorySelected(selectedNoteEntity?.categoryId ?: CategoryEntity.DEFAULT_CATEGORY_ID, true)
-        sharedViewModel.categoriesViewStateLiveData.observe(viewLifecycleOwner) { viewState ->
-            categoryViewStateEpoxyController.viewState = viewState
-        }
-
     }
 
     private fun saveNoteEntityToTheDatabase() {
@@ -151,7 +142,7 @@ class AddNoteEntityFragment: BaseFragment() {
                 true
             }
             R.id.menuEditCategory -> {
-                Toast.makeText(requireActivity(), "Select category!", Toast.LENGTH_SHORT).show()
+                onSelectCategoryPicked()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -197,6 +188,34 @@ class AddNoteEntityFragment: BaseFragment() {
     private fun dateFormatter(date: Long): String {
         val dateFormatter = SimpleDateFormat("dd-MM-yyyy")
         return dateFormatter.format(Date(date))
+    }
+
+    private fun onSelectCategoryPicked() {
+        val selectCategoryDialog = LayoutInflater.from(requireActivity())
+            .inflate(R.layout.dialog_select_category,null,false)
+        val categoryViewStateEpoxyController = CategoryViewStateEpoxyController { categoryId ->
+            sharedViewModel.onCategorySelected(categoryId)
+        }
+        val categoriesRecyclerView = selectCategoryDialog.findViewById<EpoxyRecyclerView>(R.id.categoriesEpoxyRecyclerView)
+        categoriesRecyclerView.setController(categoryViewStateEpoxyController)
+        sharedViewModel.onCategorySelected(selectedNoteEntity?.categoryId ?: CategoryEntity.DEFAULT_CATEGORY_ID, true)
+        sharedViewModel.categoriesViewStateLiveData.observe(viewLifecycleOwner) { viewState ->
+            categoryViewStateEpoxyController.viewState = viewState
+        }
+        MaterialAlertDialogBuilder(requireActivity())
+            .setView(selectCategoryDialog)
+            .setTitle("Select Category")
+            .setPositiveButton("Select") { dialog, _ ->
+                binding.categoryNameTextView.text = sharedViewModel.categoriesViewStateLiveData.value?.getSelectedCategoryName()
+                Toast.makeText(requireActivity(), "Category selected!", Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
+            }
+            .setNegativeButton("Cancel") { dialog, _ ->
+                binding.categoryNameTextView.text = sharedViewModel.categoriesViewStateLiveData.value?.getSelectedCategoryName()
+                Toast.makeText(requireActivity(), "Operation canceled", Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
+            }
+            .show()
     }
 
     override fun onDestroyView() {
