@@ -10,10 +10,10 @@ data class CategoryEntity(
     val color: Int = 0
 ){
     companion object {
-        const val DEFAULT_CATEGORY_ID = "NONE"
+        const val DEFAULT_CATEGORY_ID = ""
 
         fun getDefaultCategory(): CategoryEntity {
-            return CategoryEntity(DEFAULT_CATEGORY_ID, "None", 0)
+            return CategoryEntity(DEFAULT_CATEGORY_ID, "No category", 0)
         }
     }
 }

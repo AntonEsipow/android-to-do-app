@@ -35,7 +35,9 @@ class NotesEpoxyController(
         }
 
         if(viewState.dataList.isEmpty()) {
-            EmptyStateEpoxyModel().id("empty_state").addTo(this)
+            val title = "No notes!"
+            val subtitle = "Use the button below to add an note to your list"
+            EmptyStateEpoxyModel(title, subtitle).id("empty_state").addTo(this)
             return
         }
 

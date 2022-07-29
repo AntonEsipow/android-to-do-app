@@ -40,7 +40,9 @@ class CategoryEpoxyController(
         }
 
         if(categoryEntityList.isEmpty()) {
-            EmptyStateEpoxyModel().id("empty_state").addTo(this)
+            val title = "No categories!"
+            val subtitle = "Use the button below to add an category to your list"
+            EmptyStateEpoxyModel(title, subtitle).id("empty_state").addTo(this)
             return
         }
 

@@ -118,7 +118,7 @@ class ToDoViewModel: ViewModel() {
     private fun sortingByCategory(notes: List<NoteWithCategoryEntity>, dataList: ArrayList<NotesViewState.DataItem<*>>) {
         var currentCategoryId = "no_id"
         notes.sortedBy {
-            it.categoryEntity?.name ?: CategoryEntity.DEFAULT_CATEGORY_ID
+            it.categoryEntity?.name ?: CategoryEntity.getDefaultCategory().name
         }.forEach { note ->
             if ( note.noteEntity.categoryId != currentCategoryId) {
                 currentCategoryId = note.noteEntity.categoryId
