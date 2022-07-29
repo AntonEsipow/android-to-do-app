@@ -11,6 +11,7 @@ import com.airbnb.epoxy.EpoxyRecyclerView
 import com.bigtoapp.todo.R
 import com.bigtoapp.todo.database.entity.CategoryEntity
 import com.bigtoapp.todo.database.entity.NoteEntity
+import com.bigtoapp.todo.database.entity.NoteWithCategoryEntity
 import com.bigtoapp.todo.databinding.FragmentAddNoteBinding
 import com.bigtoapp.todo.ui.BaseFragment
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -24,9 +25,9 @@ class AddNoteEntityFragment: BaseFragment() {
     private val binding get() = _binding!!
 
     private val safeArgs: AddNoteEntityFragmentArgs by navArgs()
-    private val selectedNoteEntity: NoteEntity? by lazy {
-        sharedViewModel.noteEntitiesLiveData.value?.find {
-            it.id == safeArgs.selectedItemEntityId
+    private val selectedNoteWithCategoryEntity: NoteWithCategoryEntity? by lazy {
+        sharedViewModel.noteWithCategoryEntityLiveData.value?.find {
+            it.noteEntity.id == safeArgs.selectedItemEntityId
         }
     }
 
@@ -50,6 +51,7 @@ class AddNoteEntityFragment: BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         val currentDate = System.currentTimeMillis()
         binding.performedDateTextView.text = dateFormatter(currentDate)
+        binding.categoryNameTextView.text = CategoryEntity.getDefaultCategory().name
 
         showKeyboard()
         sharedViewModel.transactionCompletedLiveData.observe(viewLifecycleOwner) { event ->
@@ -85,7 +87,7 @@ class AddNoteEntityFragment: BaseFragment() {
         val notePerformDate: Long = dateFormat.parse(date).time
 
         if(isInEditMode) {
-            val noteEntity = selectedNoteEntity!!.copy(
+            val noteEntity = selectedNoteWithCategoryEntity!!.noteEntity.copy(
                 title = noteTitle,
                 description = noteDescription,
                 performDate = notePerformDate,
@@ -111,17 +113,19 @@ class AddNoteEntityFragment: BaseFragment() {
         binding.titleEditText.requestFocus()
         binding.descriptionEditText.text = null
         binding.performedDateTextView.text = dateFormatter(System.currentTimeMillis())
+        binding.categoryNameTextView.text = CategoryEntity.getDefaultCategory().name
         Toast.makeText(requireActivity(), "Note successfully added!", Toast.LENGTH_SHORT).show()
     }
 
     private fun setupSelectedItemEntity() {
-        selectedNoteEntity?.let { noteEntity ->
+        selectedNoteWithCategoryEntity?.let { noteWithCategoryEntity ->
             isInEditMode = true
 
-            binding.titleEditText.setText(noteEntity.title)
-            binding.titleEditText.setSelection(noteEntity.title.length)
-            binding.descriptionEditText.setText(noteEntity.description)
-            binding.performedDateTextView.setText(dateFormatter(noteEntity.performDate))
+            binding.titleEditText.setText(noteWithCategoryEntity.noteEntity.title)
+            binding.titleEditText.setSelection(noteWithCategoryEntity.noteEntity.title.length)
+            binding.descriptionEditText.setText(noteWithCategoryEntity.noteEntity.description)
+            binding.performedDateTextView.setText(dateFormatter(noteWithCategoryEntity.noteEntity.performDate))
+            binding.categoryNameTextView.setText(noteWithCategoryEntity.categoryEntity?.name)
             mainActivity.supportActionBar?.title = "Update note"
         }
     }
@@ -198,7 +202,7 @@ class AddNoteEntityFragment: BaseFragment() {
         }
         val categoriesRecyclerView = selectCategoryDialog.findViewById<EpoxyRecyclerView>(R.id.categoriesEpoxyRecyclerView)
         categoriesRecyclerView.setController(categoryViewStateEpoxyController)
-        sharedViewModel.onCategorySelected(selectedNoteEntity?.categoryId ?: CategoryEntity.DEFAULT_CATEGORY_ID, true)
+        sharedViewModel.onCategorySelected(selectedNoteWithCategoryEntity?.noteEntity?.categoryId ?: CategoryEntity.DEFAULT_CATEGORY_ID, true)
         sharedViewModel.categoriesViewStateLiveData.observe(viewLifecycleOwner) { viewState ->
             categoryViewStateEpoxyController.viewState = viewState
         }
