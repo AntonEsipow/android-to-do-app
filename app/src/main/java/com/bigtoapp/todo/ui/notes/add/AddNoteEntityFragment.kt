@@ -125,7 +125,7 @@ class AddNoteEntityFragment: BaseFragment() {
             binding.titleEditText.setSelection(noteWithCategoryEntity.noteEntity.title.length)
             binding.descriptionEditText.setText(noteWithCategoryEntity.noteEntity.description)
             binding.performedDateTextView.setText(dateFormatter(noteWithCategoryEntity.noteEntity.performDate))
-            binding.categoryNameTextView.setText(noteWithCategoryEntity.categoryEntity?.name)
+            binding.categoryNameTextView.setText(noteWithCategoryEntity.categoryEntity?.name ?: CategoryEntity.getDefaultCategory().name)
             mainActivity.supportActionBar?.title = "Update note"
         }
     }

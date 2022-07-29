@@ -7,6 +7,7 @@ import androidx.core.view.isVisible
 import com.airbnb.epoxy.EpoxyController
 import com.bigtoapp.todo.R
 import com.bigtoapp.todo.addHeaderModel
+import com.bigtoapp.todo.arch.ToDoViewModel
 import com.bigtoapp.todo.database.entity.NoteEntity
 import com.bigtoapp.todo.database.entity.NoteWithCategoryEntity
 import com.bigtoapp.todo.databinding.ModelNoteEntityBinding
@@ -21,38 +22,34 @@ class NotesEpoxyController(
     private val noteEntityInterface: NoteEntityInterface
 ): EpoxyController() {
 
-    private var isLoading: Boolean = true
+    var viewState: ToDoViewModel.NotesViewState = ToDoViewModel.NotesViewState(isLoading = true)
         set(value) {
             field = value
-            if(field) {
-                requestModelBuild()
-            }
-        }
-
-    var notes: List<NoteWithCategoryEntity> = emptyList()
-        set(value) {
-            field = value
-            isLoading = false
             requestModelBuild()
         }
-
     override fun buildModels() {
 
-        if(isLoading) {
+        if(viewState.isLoading) {
             LoadingEpoxyModel().id("loading_state").addTo(this)
             return
         }
 
-        if(notes.isEmpty()) {
+        if(viewState.dataList.isEmpty()) {
             EmptyStateEpoxyModel().id("empty_state").addTo(this)
             return
         }
 
-        addHeaderModel("Newest")
-        notes.forEach { note ->
-            NoteEntityEpoxyModel(note, noteEntityInterface).id(note.noteEntity.id).addTo(this)
-        }
+        viewState.dataList.forEach{ dataItem ->
+            if(dataItem.isHeader) {
+                addHeaderModel(dataItem.data as String)
+                return@forEach
+            }
 
+            val noteWithCategoryEntity = dataItem.data as NoteWithCategoryEntity
+            NoteEntityEpoxyModel(noteWithCategoryEntity, noteEntityInterface)
+                .id(noteWithCategoryEntity.noteEntity.id)
+                .addTo(this)
+        }
     }
 
     data class NoteEntityEpoxyModel(

@@ -11,6 +11,9 @@ import com.bigtoapp.todo.database.entity.NoteEntity
 import com.bigtoapp.todo.database.entity.NoteWithCategoryEntity
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.collect
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ToDoViewModel: ViewModel() {
 
@@ -24,17 +27,26 @@ class ToDoViewModel: ViewModel() {
     val noteWithCategoryEntityLiveData: LiveData<List<NoteWithCategoryEntity>>
         get() = _noteWithCategoryEntityLiveData
 
-    private val _categoryEntitiesLiveData = MutableLiveData<List<CategoryEntity>>()
-    val categoryEntitiesLiveData: LiveData<List<CategoryEntity>>
-        get() = _categoryEntitiesLiveData
-
     private val _transactionCompletedLiveData = MutableLiveData<Event<Boolean>>()
     val transactionCompletedLiveData: LiveData<Event<Boolean>>
         get() = _transactionCompletedLiveData
 
+    // Categories
     private val _categoriesViewStateLiveData = MutableLiveData<CategoriesViewState>()
     val categoriesViewStateLiveData: LiveData<CategoriesViewState>
         get() = _categoriesViewStateLiveData
+
+    private val _categoryEntitiesLiveData = MutableLiveData<List<CategoryEntity>>()
+    val categoryEntitiesLiveData: LiveData<List<CategoryEntity>>
+        get() = _categoryEntitiesLiveData
+
+    // Notes
+    private val dataList = ArrayList<NotesViewState.DataItem<*>>()
+    private val currentSort: NotesViewState.Sort = NotesViewState.Sort.CURRENT
+    private val _notesViewStateLiveData = MutableLiveData<NotesViewState>()
+    val notesViewStateLiveData: LiveData<NotesViewState>
+        get() = _notesViewStateLiveData
+
 
     fun init(appDatabase: AppDatabase) {
         repository = ToDoRepository(appDatabase)
@@ -49,6 +61,8 @@ class ToDoViewModel: ViewModel() {
         viewModelScope.launch {
             repository.getAllNotesWithCategoryEntities().collect{ notes ->
                 _noteWithCategoryEntityLiveData.postValue(notes)
+
+                updateHomeViewState(notes)
             }
         }
 
@@ -56,6 +70,67 @@ class ToDoViewModel: ViewModel() {
             repository.getAllCategories().collect { categories ->
                 _categoryEntitiesLiveData.postValue(categories)
             }
+        }
+    }
+
+    private fun updateHomeViewState(notes: List<NoteWithCategoryEntity>) {
+
+        when(currentSort) {
+            NotesViewState.Sort.CURRENT -> sortingByCurrent(notes, dataList)
+            NotesViewState.Sort.CATEGORY -> {
+                // todo
+            }
+            NotesViewState.Sort.ALL -> {
+                // todo
+            }
+            NotesViewState.Sort.PERFORM -> {
+                // todo
+            }
+        }
+
+        _notesViewStateLiveData.postValue(
+            NotesViewState(
+                dataList = dataList,
+                isLoading = false,
+                sort = currentSort
+            )
+        )
+    }
+
+    private fun sortingByCurrent(notes: List<NoteWithCategoryEntity>, dataList: ArrayList<NotesViewState.DataItem<*>>) {
+        val dateFormatter = SimpleDateFormat("dd-MM-yyyy")
+        val currentDate = dateFormatter.format(Date(System.currentTimeMillis()))
+        val headerItem = NotesViewState.DataItem(
+            data = "Current date",
+            isHeader = true
+        )
+        dataList.add(headerItem)
+        notes.sortedBy {
+            it.noteEntity.performDate
+        }.forEach { note ->
+            val performDate = dateFormatter.format(Date(note.noteEntity.performDate))
+            if(currentDate == performDate) {
+                val dataItem = NotesViewState.DataItem( data = note)
+                dataList.add(dataItem)
+            }
+        }
+    }
+
+    data class NotesViewState(
+        val dataList: List<DataItem<*>> = emptyList(),
+        val isLoading: Boolean = false,
+        val sort: Sort = Sort.CURRENT
+    ) {
+        data class DataItem<T>(
+            val data: T,
+            val isHeader: Boolean = false
+        )
+
+        enum class Sort(val displayName: String) {
+            CATEGORY("Category"),
+            PERFORM("Perform date"),
+            CURRENT("Current date"),
+            ALL("All notes")
         }
     }
 
