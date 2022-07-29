@@ -41,8 +41,11 @@ class ToDoViewModel: ViewModel() {
         get() = _categoryEntitiesLiveData
 
     // Notes
-    private val dataList = ArrayList<NotesViewState.DataItem<*>>()
-    private val currentSort: NotesViewState.Sort = NotesViewState.Sort.CURRENT
+    var currentSort: NotesViewState.Sort = NotesViewState.Sort.CURRENT
+        set(value) {
+            field = value
+            updateHomeViewState(_noteWithCategoryEntityLiveData.value!!)
+        }
     private val _notesViewStateLiveData = MutableLiveData<NotesViewState>()
     val notesViewStateLiveData: LiveData<NotesViewState>
         get() = _notesViewStateLiveData
@@ -75,17 +78,13 @@ class ToDoViewModel: ViewModel() {
 
     private fun updateHomeViewState(notes: List<NoteWithCategoryEntity>) {
 
+        val dataList = ArrayList<NotesViewState.DataItem<*>>()
+
         when(currentSort) {
-            NotesViewState.Sort.CURRENT -> sortingByCurrent(notes, dataList)
-            NotesViewState.Sort.CATEGORY -> {
-                // todo
-            }
-            NotesViewState.Sort.ALL -> {
-                // todo
-            }
-            NotesViewState.Sort.PERFORM -> {
-                // todo
-            }
+            NotesViewState.Sort.CURRENT -> sortingByCurrentDate(notes, dataList)
+            NotesViewState.Sort.CATEGORY -> sortingByCategory(notes, dataList)
+            NotesViewState.Sort.ALL -> sortingDisplayAllNotes(notes, dataList)
+            NotesViewState.Sort.PERFORM -> sortingByPerformDate(notes, dataList)
         }
 
         _notesViewStateLiveData.postValue(
@@ -97,7 +96,7 @@ class ToDoViewModel: ViewModel() {
         )
     }
 
-    private fun sortingByCurrent(notes: List<NoteWithCategoryEntity>, dataList: ArrayList<NotesViewState.DataItem<*>>) {
+    private fun sortingByCurrentDate(notes: List<NoteWithCategoryEntity>, dataList: ArrayList<NotesViewState.DataItem<*>>) {
         val dateFormatter = SimpleDateFormat("dd-MM-yyyy")
         val currentDate = dateFormatter.format(Date(System.currentTimeMillis()))
         val headerItem = NotesViewState.DataItem(
@@ -115,6 +114,60 @@ class ToDoViewModel: ViewModel() {
             }
         }
     }
+
+    private fun sortingByCategory(notes: List<NoteWithCategoryEntity>, dataList: ArrayList<NotesViewState.DataItem<*>>) {
+        var currentCategoryId = "no_id"
+        notes.sortedBy {
+            it.categoryEntity?.name ?: CategoryEntity.DEFAULT_CATEGORY_ID
+        }.forEach { note ->
+            if ( note.noteEntity.categoryId != currentCategoryId) {
+                currentCategoryId = note.noteEntity.categoryId
+                val headerItem = NotesViewState.DataItem(
+                    data = note.categoryEntity?.name ?: CategoryEntity.getDefaultCategory().name,
+                    isHeader = true
+                )
+                dataList.add(headerItem)
+            }
+            val dataItem = NotesViewState.DataItem(data = note)
+            dataList.add(dataItem)
+        }
+    }
+
+    private fun sortingDisplayAllNotes(notes: List<NoteWithCategoryEntity>, dataList: ArrayList<NotesViewState.DataItem<*>>) {
+        val headerItem = NotesViewState.DataItem(
+            data = "All notes",
+            isHeader = true
+        )
+        dataList.add(headerItem)
+        notes.sortedByDescending {
+            it.noteEntity.createdAt
+        }.forEach { note ->
+            val dataItem = NotesViewState.DataItem(data = note)
+            dataList.add(dataItem)
+        }
+    }
+
+    private fun sortingByPerformDate(notes: List<NoteWithCategoryEntity>, dataList: ArrayList<NotesViewState.DataItem<*>>) {
+        val dateFormatter = SimpleDateFormat("dd-MM-yyyy")
+        var headerPerformDate = "01-01-2000"
+        notes.sortedBy {
+            it.noteEntity.performDate
+        }.forEach { note ->
+            val performDate = dateFormatter.format(Date(note.noteEntity.performDate))
+            if(performDate != headerPerformDate) {
+                headerPerformDate = performDate
+                val headerItem = NotesViewState.DataItem(
+                    data = headerPerformDate,
+                    isHeader = true
+                )
+                dataList.add(headerItem)
+            }
+            val dataItem = NotesViewState.DataItem(data = note)
+            dataList.add(dataItem)
+        }
+    }
+
+
 
     data class NotesViewState(
         val dataList: List<DataItem<*>> = emptyList(),
