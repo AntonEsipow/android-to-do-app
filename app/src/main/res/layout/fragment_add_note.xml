@@ -3,13 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/gray_50">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/performedDateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
+        android:textColor="?attr/colorOnSurface"
         android:text="21-06-2022"
         app:layout_constraintStart_toEndOf="@+id/performTextView"
         app:layout_constraintTop_toTopOf="@+id/performTextView" />
@@ -17,6 +19,7 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="?attr/colorOnSurface"
         android:id="@+id/performTextView"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="16dp"
@@ -28,6 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:textColor="?attr/colorOnSurface"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:text="Book"
@@ -37,19 +41,19 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/categoryTextView"
         android:layout_width="wrap_content"
+        android:textColor="?attr/colorOnSurface"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:text="@string/category_name_text_view"
         app:layout_constraintEnd_toStartOf="@+id/categoryNameTextView"
         app:layout_constraintTop_toTopOf="@+id/performedDateTextView"/>
 
-
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/titleEditLayout"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         app:boxBackgroundMode="none"
+        android:background="@color/gray_50"
         app:errorEnabled="true"
         app:hintEnabled="false"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,6 +66,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_title"
+            android:textColor="?attr/colorOnSurface"
             android:textSize="20sp"
             android:textStyle="bold"/>
 
@@ -72,6 +77,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:boxBackgroundMode="none"
+        android:background="@color/gray_50"
         app:hintEnabled="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleEditLayout">
@@ -79,6 +85,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/descriptionEditText"
             android:layout_width="match_parent"
+            android:textColor="?attr/colorOnSurface"
             android:layout_height="wrap_content"
             android:hint="@string/hint_description" />
 

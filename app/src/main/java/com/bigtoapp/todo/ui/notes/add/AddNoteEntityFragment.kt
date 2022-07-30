@@ -170,7 +170,6 @@ class AddNoteEntityFragment: BaseFragment() {
                 .setTitleText("Select perform date")
                 .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
                 .build()
-
         datePicker.show(parentFragmentManager, "MATERIAL_DATE_PICKER")
         // Setting up the event for when ok is clicked
         datePicker.addOnPositiveButtonClickListener {

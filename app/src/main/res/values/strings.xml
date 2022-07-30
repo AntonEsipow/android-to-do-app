@@ -21,4 +21,5 @@
     <string name="add_category">Select category</string>
     <string name="sort_order">Sort order</string>
     <string name="sort">Sort</string>
+    <string name="perform_date">Perform date:</string>
 </resources>

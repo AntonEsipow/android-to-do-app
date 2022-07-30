@@ -77,7 +77,7 @@ class NotesEpoxyController(
             val currentDate = dateFormatter.format(Date(System.currentTimeMillis()))
             performDateText.text = performDate
             if(performDateText.text == currentDate) {
-                performDateText.setTextColor(ContextCompat.getColor(root.context, R.color.red))
+                performDateText.setTextColor(ContextCompat.getColor(root.context, R.color.color_red))
             }
 
             val colorRes = R.color.white

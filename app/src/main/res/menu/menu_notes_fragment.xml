@@ -6,5 +6,6 @@
         android:icon="@drawable/ic_baseline_sort_24"
         app:showAsAction="always"
         android:title="@string/sort"
-        android:id="@+id/menuItemSort"/>
+        android:id="@+id/menuItemSort"
+        android:iconTint="?attr/colorOnPrimary"/>
 </menu>

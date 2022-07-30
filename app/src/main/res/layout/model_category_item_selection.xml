@@ -37,8 +37,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:background="@color/teal_700"
-            tools:background="@color/teal_700" />
+            android:background="@color/amber_800"
+            tools:background="@color/amber_800" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
