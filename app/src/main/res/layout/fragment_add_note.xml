@@ -51,10 +51,9 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/titleEditLayout"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
         app:boxBackgroundMode="none"
         android:background="@color/gray_50"
-        app:errorEnabled="true"
         app:hintEnabled="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/performTextView">
@@ -62,7 +61,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/titleEditText"
             android:maxLines="1"
-            android:maxLength="33"
+            android:maxLength="30"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_title"
@@ -86,6 +85,8 @@
             android:id="@+id/descriptionEditText"
             android:layout_width="match_parent"
             android:textColor="?attr/colorOnSurface"
+            android:lineSpacingMultiplier="1.5"
+            android:textSize="18sp"
             android:layout_height="wrap_content"
             android:hint="@string/hint_description" />
 

@@ -95,7 +95,6 @@ class AddNoteEntityFragment: BaseFragment() {
         val notePerformDate: Long = dateFormat.parse(date).time
 
         if(isInEditMode) {
-            val selectedCategoryId = itemCategoryId ?: selectedNoteWithCategoryEntity!!.noteEntity.categoryId
             val noteEntity = selectedNoteWithCategoryEntity!!.noteEntity.copy(
                 title = noteTitle,
                 description = noteDescription,
@@ -187,7 +186,7 @@ class AddNoteEntityFragment: BaseFragment() {
         }
         // Setting up the event for when back button is pressed
         datePicker.addOnCancelListener {
-            Toast.makeText(requireActivity(), "Date Picker Cancelled", Toast.LENGTH_LONG).show()
+            // No message
         }
     }
 
@@ -211,7 +210,6 @@ class AddNoteEntityFragment: BaseFragment() {
             }
             .setNegativeButton("Cancel") { dialog, _ ->
                 binding.categoryNameTextView.text = sharedViewModel.categoriesViewStateLiveData.value?.getSelectedCategoryName()
-                Toast.makeText(requireActivity(), "Operation canceled", Toast.LENGTH_SHORT).show()
                 dialog.dismiss()
             }
             .show()
