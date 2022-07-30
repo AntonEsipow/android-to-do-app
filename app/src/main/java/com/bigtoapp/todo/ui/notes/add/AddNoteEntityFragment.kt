@@ -30,6 +30,9 @@ class AddNoteEntityFragment: BaseFragment() {
             it.noteEntity.id == safeArgs.selectedItemEntityId
         }
     }
+    private val categoryViewStateEpoxyController = CategoryViewStateEpoxyController { categoryId ->
+        sharedViewModel.onCategorySelected(categoryId)
+    }
 
     private var isInEditMode: Boolean = false
 
@@ -57,6 +60,7 @@ class AddNoteEntityFragment: BaseFragment() {
         sharedViewModel.transactionCompletedLiveData.observe(viewLifecycleOwner) { event ->
             event.getContent()?.let {
                 if (isInEditMode) {
+                    Toast.makeText(requireActivity(), "Note successfully updated!", Toast.LENGTH_SHORT).show()
                     navigateUp()
                     return@observe
                 }
@@ -66,6 +70,10 @@ class AddNoteEntityFragment: BaseFragment() {
         binding.titleEditText.requestFocus()
         // Setup screen if we are in edit mode
         setupSelectedItemEntity()
+        sharedViewModel.onCategorySelected(selectedNoteWithCategoryEntity?.noteEntity?.categoryId ?: CategoryEntity.DEFAULT_CATEGORY_ID, true)
+        sharedViewModel.categoriesViewStateLiveData.observe(viewLifecycleOwner) { viewState ->
+            categoryViewStateEpoxyController.viewState = viewState
+        }
     }
 
     private fun saveNoteEntityToTheDatabase() {
@@ -87,6 +95,7 @@ class AddNoteEntityFragment: BaseFragment() {
         val notePerformDate: Long = dateFormat.parse(date).time
 
         if(isInEditMode) {
+            val selectedCategoryId = itemCategoryId ?: selectedNoteWithCategoryEntity!!.noteEntity.categoryId
             val noteEntity = selectedNoteWithCategoryEntity!!.noteEntity.copy(
                 title = noteTitle,
                 description = noteDescription,
@@ -155,13 +164,7 @@ class AddNoteEntityFragment: BaseFragment() {
 
     private fun onMenuAddClicked() {
         saveNoteEntityToTheDatabase()
-        if(isInEditMode) {
-            Toast.makeText(requireActivity(), "Updated!", Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(requireActivity(), "Added!", Toast.LENGTH_SHORT).show()
-        }
     }
-
 
     private fun onPickDate(){
         hideKeyboard()
@@ -196,15 +199,8 @@ class AddNoteEntityFragment: BaseFragment() {
     private fun onSelectCategoryPicked() {
         val selectCategoryDialog = LayoutInflater.from(requireActivity())
             .inflate(R.layout.dialog_select_category,null,false)
-        val categoryViewStateEpoxyController = CategoryViewStateEpoxyController { categoryId ->
-            sharedViewModel.onCategorySelected(categoryId)
-        }
         val categoriesRecyclerView = selectCategoryDialog.findViewById<EpoxyRecyclerView>(R.id.categoriesEpoxyRecyclerView)
         categoriesRecyclerView.setController(categoryViewStateEpoxyController)
-        sharedViewModel.onCategorySelected(selectedNoteWithCategoryEntity?.noteEntity?.categoryId ?: CategoryEntity.DEFAULT_CATEGORY_ID, true)
-        sharedViewModel.categoriesViewStateLiveData.observe(viewLifecycleOwner) { viewState ->
-            categoryViewStateEpoxyController.viewState = viewState
-        }
         MaterialAlertDialogBuilder(requireActivity())
             .setView(selectCategoryDialog)
             .setTitle("Select Category")

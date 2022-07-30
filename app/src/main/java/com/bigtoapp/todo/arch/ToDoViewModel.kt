@@ -41,7 +41,7 @@ class ToDoViewModel: ViewModel() {
         get() = _categoryEntitiesLiveData
 
     // Notes
-    var currentSort: NotesViewState.Sort = NotesViewState.Sort.CURRENT
+    var currentSort: NotesViewState.Sort = NotesViewState.Sort.CATEGORY
         set(value) {
             field = value
             updateHomeViewState(_noteWithCategoryEntityLiveData.value!!)
