@@ -35,16 +35,18 @@ class NotesEpoxyController(
         }
 
         if(viewState.dataList.isEmpty()) {
-            val title = "No notes!"
-            val subtitle = "Use the button below to add an note to your list"
-            EmptyStateEpoxyModel(title, subtitle).id("empty_state").addTo(this)
+            emptyStateEpoxyModel()
             return
         }
 
         viewState.dataList.forEach{ dataItem ->
-            if(dataItem.isHeader) {
-                addHeaderModel(dataItem.data as String)
-                return@forEach
+            if(dataItem.data.toString().isEmpty()) {
+                emptyStateEpoxyModel()
+            } else {
+                if(dataItem.isHeader) {
+                    addHeaderModel(dataItem.data as String)
+                    return@forEach
+                }
             }
 
             val noteWithCategoryEntity = dataItem.data as NoteWithCategoryEntity
@@ -52,6 +54,12 @@ class NotesEpoxyController(
                 .id(noteWithCategoryEntity.noteEntity.id)
                 .addTo(this)
         }
+    }
+
+    private fun emptyStateEpoxyModel() {
+        val title = "No notes!"
+        val subtitle = "Use the button below to add an note to your list"
+        EmptyStateEpoxyModel(title, subtitle).id("empty_state").addTo(this)
     }
 
     data class NoteEntityEpoxyModel(
