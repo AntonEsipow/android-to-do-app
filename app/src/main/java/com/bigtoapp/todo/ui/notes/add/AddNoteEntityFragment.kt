@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
 import com.airbnb.epoxy.EpoxyRecyclerView
+import com.bigtoapp.todo.Localizations
 import com.bigtoapp.todo.R
 import com.bigtoapp.todo.database.entity.CategoryEntity
 import com.bigtoapp.todo.database.entity.NoteEntity
@@ -52,6 +53,7 @@ class AddNoteEntityFragment: BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mainActivity.supportActionBar?.title = Localizations.fragmentTitleAddNote
         val currentDate = System.currentTimeMillis()
         binding.performedDateTextView.text = dateFormatter(currentDate)
         binding.categoryNameTextView.text = CategoryEntity.getDefaultCategory().name
@@ -60,7 +62,7 @@ class AddNoteEntityFragment: BaseFragment() {
         sharedViewModel.transactionCompletedLiveData.observe(viewLifecycleOwner) { event ->
             event.getContent()?.let {
                 if (isInEditMode) {
-                    Toast.makeText(requireActivity(), "Note successfully updated!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireActivity(), Localizations.noteUpdated, Toast.LENGTH_SHORT).show()
                     navigateUp()
                     return@observe
                 }
@@ -79,7 +81,7 @@ class AddNoteEntityFragment: BaseFragment() {
     private fun saveNoteEntityToTheDatabase() {
         val noteTitle = binding.titleEditText.text.toString().trim()
         if(noteTitle.isEmpty()) {
-            binding.titleEditText.error = "* Required field"
+            binding.titleEditText.error = Localizations.titleError
             return
         } else {
             binding.titleEditText.error = null
@@ -122,7 +124,7 @@ class AddNoteEntityFragment: BaseFragment() {
         binding.descriptionEditText.text = null
         binding.performedDateTextView.text = dateFormatter(System.currentTimeMillis())
         binding.categoryNameTextView.text = CategoryEntity.getDefaultCategory().name
-        Toast.makeText(requireActivity(), "Note successfully added!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireActivity(), Localizations.noteAdded, Toast.LENGTH_SHORT).show()
     }
 
     private fun setupSelectedItemEntity() {
@@ -134,7 +136,7 @@ class AddNoteEntityFragment: BaseFragment() {
             binding.descriptionEditText.setText(noteWithCategoryEntity.noteEntity.description)
             binding.performedDateTextView.setText(dateFormatter(noteWithCategoryEntity.noteEntity.performDate))
             binding.categoryNameTextView.setText(noteWithCategoryEntity.categoryEntity?.name ?: CategoryEntity.getDefaultCategory().name)
-            mainActivity.supportActionBar?.title = "Update note"
+            mainActivity.supportActionBar?.title = Localizations.fragmentTitleUpdateNote
         }
     }
 
@@ -169,7 +171,7 @@ class AddNoteEntityFragment: BaseFragment() {
         hideKeyboard()
         val datePicker =
             MaterialDatePicker.Builder.datePicker()
-                .setTitleText("Select perform date")
+                .setTitleText(Localizations.selectPerformDate)
                 .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
                 .build()
         datePicker.show(parentFragmentManager, "MATERIAL_DATE_PICKER")
@@ -178,7 +180,7 @@ class AddNoteEntityFragment: BaseFragment() {
             // formatting date in dd-mm-yyyy format.
             val date = dateFormatter(it)
             binding.performedDateTextView.text = date
-            Toast.makeText(requireActivity(), "$date is selected", Toast.LENGTH_LONG).show()
+            Toast.makeText(requireActivity(), date + Localizations.isSelected, Toast.LENGTH_LONG).show()
         }
         // Setting up the event for when cancelled is clicked
         datePicker.addOnNegativeButtonClickListener {
@@ -202,13 +204,13 @@ class AddNoteEntityFragment: BaseFragment() {
         categoriesRecyclerView.setController(categoryViewStateEpoxyController)
         MaterialAlertDialogBuilder(requireActivity())
             .setView(selectCategoryDialog)
-            .setTitle("Select Category")
-            .setPositiveButton("Select") { dialog, _ ->
+            .setTitle(Localizations.selectCategory)
+            .setPositiveButton(Localizations.select) { dialog, _ ->
                 binding.categoryNameTextView.text = sharedViewModel.categoriesViewStateLiveData.value?.getSelectedCategoryName()
-                Toast.makeText(requireActivity(), "Category selected!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireActivity(), Localizations.categorySelected, Toast.LENGTH_SHORT).show()
                 dialog.dismiss()
             }
-            .setNegativeButton("Cancel") { dialog, _ ->
+            .setNegativeButton(Localizations.cancel) { dialog, _ ->
                 binding.categoryNameTextView.text = sharedViewModel.categoriesViewStateLiveData.value?.getSelectedCategoryName()
                 dialog.dismiss()
             }

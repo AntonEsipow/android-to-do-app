@@ -27,12 +27,12 @@
     <string name="display_perform_date">21-06-2022</string>
 
     <!-- Sorting -->
-    <string name="sort_by_category">Category</string>
-    <string name="sort_by_perform_date">Perform date</string>
-    <string name="sort_by_current_date">Current date</string>
+    <string name="sort_by_category">Категории</string>
+    <string name="sort_by_perform_date">Дата завершения</string>
+    <string name="sort_by_current_date">На сегодня</string>
     <string name="sort_display_all_notes">Все заметки</string>
 
-    <!-- Add categoryEntityFragment -->
+    <!-- Add CategoryEntityFragment -->
     <string name="rgb_red">Красный</string>
     <string name="rgb_green">Зеленый</string>
     <string name="rgb_blue">Синий</string>
@@ -45,6 +45,28 @@
     <string name="title_no_category">Нет категорий!</string>
     <string name="subtitle_no_category">Нажмите на кнопку снизу чтобы добавить категорию</string>
     <string name="header_all_categories">Все категории</string>
-    // Categories Fragment
-    <string name="categories_fragment_header">Категории</string>
+
+    <!-- Categories Fragment -->
+    <string name="fragment_title_categories">Категории</string>
+
+    <!-- Add NoteEntityFragment -->
+    <string name="note_updated">Заметка успешно изменена!</string>
+    <string name="note_added">Заметка успешно добавлена!</string>
+    <string name="fragment_title_update_note">Изменить заметку</string>
+    <string name="fragment_title_add_note">Добавить заметку</string>
+    <string name="select_perform_date">Выбрать дату завершения</string>
+    <string name="is_selected">выбрана</string>
+    <string name="select_category">Выберите категорию</string>
+    <string name="select">Выбрать</string>
+    <string name="category_selected">Категория выбрана!</string>
+    <string name="cancel">Отменить</string>
+
+    <!-- Notes Fragment -->
+    <string name="fragment_notes_title">Заметки</string>
+    <string name="title_no_notes">Нет заметок!</string>
+    <string name="subtitle_no_notes">Нажмите на кнопку снизу чтобы добавить заметку</string>
+
+    <!-- Default category -->
+    <string name="def_category_name">Без категории</string>
+
 </resources>

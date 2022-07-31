@@ -31,7 +31,7 @@
     <string name="sort_by_current_date">Current date</string>
     <string name="sort_display_all_notes">All notes</string>
 
-    <!-- Add categoryEntityFragment -->
+    <!-- Add CategoryEntityFragment -->
     <string name="rgb_red">Red</string>
     <string name="rgb_green">Green</string>
     <string name="rgb_blue">Blue</string>
@@ -44,7 +44,27 @@
     <string name="title_no_category">No categories!</string>
     <string name="subtitle_no_category">Use the button below to add an category to your list</string>
     <string name="header_all_categories">All categories</string>
-    // Categories Fragment
-    <string name="categories_fragment_header">Categories</string>
 
+    <!-- Categories Fragment -->
+    <string name="fragment_title_categories">Categories</string>
+
+    <!-- Add NoteEntityFragment -->
+    <string name="note_updated">Note successfully updated!</string>
+    <string name="note_added">Note successfully added!</string>
+    <string name="fragment_title_update_note">Update note</string>
+    <string name="fragment_title_add_note">Add note</string>
+    <string name="select_perform_date">Select perform date</string>
+    <string name="is_selected">is selected</string>
+    <string name="select_category">Select Category</string>
+    <string name="select">Select</string>
+    <string name="category_selected">Category selected!</string>
+    <string name="cancel">Cancel</string>
+
+    <!-- Notes Fragment -->
+    <string name="fragment_notes_title">Notes</string>
+    <string name="title_no_notes">No notes!</string>
+    <string name="subtitle_no_notes">Use the button below to add an note to your list</string>
+
+    <!-- Default category -->
+    <string name="def_category_name">No category</string>
 </resources>

@@ -5,6 +5,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import com.airbnb.epoxy.EpoxyController
+import com.bigtoapp.todo.Localizations
 import com.bigtoapp.todo.R
 import com.bigtoapp.todo.addHeaderModel
 import com.bigtoapp.todo.arch.ToDoViewModel
@@ -57,8 +58,8 @@ class NotesEpoxyController(
     }
 
     private fun emptyStateEpoxyModel() {
-        val title = "No notes!"
-        val subtitle = "Use the button below to add an note to your list"
+        val title = Localizations.titleNoNotes
+        val subtitle = Localizations.subtitleNoNotes
         EmptyStateEpoxyModel(title, subtitle).id("empty_state").addTo(this)
     }
 

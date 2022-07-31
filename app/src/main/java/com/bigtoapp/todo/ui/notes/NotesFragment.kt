@@ -3,6 +3,7 @@ package com.bigtoapp.todo.ui.notes
 import android.os.Bundle
 import android.view.*
 import com.airbnb.epoxy.EpoxyTouchHelper
+import com.bigtoapp.todo.Localizations
 import com.bigtoapp.todo.R
 import com.bigtoapp.todo.database.entity.NoteEntity
 import com.bigtoapp.todo.databinding.FragmentNotesBinding
@@ -30,6 +31,7 @@ class NotesFragment: BaseFragment(), NoteEntityInterface {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mainActivity.supportActionBar?.title = Localizations.fragmentNotesTitle
 
         hideKeyboard()
         binding.fab.setOnClickListener {

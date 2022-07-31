@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bigtoapp.todo.Localizations
 import com.bigtoapp.todo.R
 import com.bigtoapp.todo.database.AppDatabase
 import com.bigtoapp.todo.database.entity.CategoryEntity
@@ -104,7 +105,7 @@ class ToDoViewModel: ViewModel() {
         val dateFormatter = SimpleDateFormat("dd-MM-yyyy")
         val currentDate = dateFormatter.format(Date(System.currentTimeMillis()))
         val headerItem = NotesViewState.DataItem(
-            data = "Current date",
+            data = Localizations.sortByCurrentDate,
             isHeader = true
         )
         dataList.add(headerItem)
@@ -139,7 +140,7 @@ class ToDoViewModel: ViewModel() {
 
     private fun sortingDisplayAllNotes(notes: List<NoteWithCategoryEntity>, dataList: ArrayList<NotesViewState.DataItem<*>>) {
         val headerItem = NotesViewState.DataItem(
-            data = "All notes",
+            data = Localizations.sortDisplayAllNotes,
             isHeader = true
         )
         dataList.add(headerItem)
@@ -185,10 +186,10 @@ class ToDoViewModel: ViewModel() {
         )
 
         enum class Sort(val displayName: String) {
-            CATEGORY("Category"),
-            PERFORM("Perform date"),
-            CURRENT("Current date"),
-            ALL("All notes")
+            CATEGORY(Localizations.sortByCategory),
+            PERFORM(Localizations.sortByPerformDate),
+            CURRENT(Localizations.sortByCurrentDate),
+            ALL(Localizations.sortDisplayAllNotes)
         }
     }
 

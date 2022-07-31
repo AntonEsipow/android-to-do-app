@@ -2,6 +2,7 @@ package com.bigtoapp.todo.database.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.bigtoapp.todo.Localizations
 
 @Entity(tableName = "category_entity")
 data class CategoryEntity(
@@ -13,7 +14,7 @@ data class CategoryEntity(
         const val DEFAULT_CATEGORY_ID = ""
 
         fun getDefaultCategory(): CategoryEntity {
-            return CategoryEntity(DEFAULT_CATEGORY_ID, "No category", 0)
+            return CategoryEntity(DEFAULT_CATEGORY_ID, Localizations.defCategoryName, 0)
         }
     }
 }
