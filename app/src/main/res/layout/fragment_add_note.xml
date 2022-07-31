@@ -62,6 +62,7 @@
             android:id="@+id/titleEditText"
             android:maxLines="1"
             android:maxLength="30"
+            android:inputType="textCapSentences"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_title"
@@ -74,21 +75,24 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/descriptionTextLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:boxBackgroundMode="none"
+        android:layout_height="0dp"
         android:background="@color/gray_50"
+        app:boxBackgroundMode="none"
         app:hintEnabled="false"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleEditLayout">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/descriptionEditText"
             android:layout_width="match_parent"
-            android:textColor="?attr/colorOnSurface"
+            android:layout_height="match_parent"
+            android:hint="@string/hint_description"
+            android:gravity="start"
+            android:inputType="textMultiLine|textCapSentences"
             android:lineSpacingMultiplier="1.5"
-            android:textSize="18sp"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_description" />
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="18sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

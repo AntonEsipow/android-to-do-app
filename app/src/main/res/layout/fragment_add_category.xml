@@ -7,9 +7,8 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/categoryNameEditLayout"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
         app:boxBackgroundMode="none"
-        app:errorEnabled="true"
         app:hintEnabled="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -17,10 +16,11 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/categoryNameText"
             android:maxLines="1"
-            android:maxLength="33"
+            android:maxLength="30"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="?attr/colorOnSurface"
+            android:inputType="textCapSentences"
             android:hint="@string/hint_title"
             android:textSize="20sp"
             android:textStyle="bold"/>
