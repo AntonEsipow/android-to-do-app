@@ -6,7 +6,6 @@
         app:showAsAction="always"
         android:title="Done"
         android:icon="@drawable/ic_done_24"
-        android:id="@+id/menuCategoryAdd"
-        android:iconTint="@color/white"/>
+        android:id="@+id/menuCategoryAdd"/>
 
 </menu>

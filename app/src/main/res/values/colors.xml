@@ -6,11 +6,11 @@
     <color name="color_accent">#5D4037</color>
     <color name="color_red">#d50000</color>
 
-    <color name="primaryLightColor">@color/gray_50</color>
-    <color name="primaryColor">@color/gray_700</color>
-    <color name="primaryDarkColor">@color/gray_800</color>
-    <color name="secondaryLightColor">@color/amber_200</color>
-    <color name="secondaryColor">@color/amber_500</color>
+    <color name="primaryLightColor">@color/amber_300</color>
+    <color name="primaryColor">@color/amber_500</color>
+    <color name="primaryDarkColor">@color/amber_700</color>
+    <color name="secondaryLightColor">@color/amber_500</color>
+    <color name="secondaryColor">@color/amber_700</color>
     <color name="secondaryDarkColor">@color/amber_900</color>
 
     // Grey

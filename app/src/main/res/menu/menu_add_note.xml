@@ -6,21 +6,18 @@
         app:showAsAction="always"
         android:title="Perform Date"
         android:icon="@drawable/ic_edit_date_24"
-        android:id="@+id/menuEditPerformDate"
-        android:iconTint="?attr/colorOnPrimary"/>
+        android:id="@+id/menuEditPerformDate"/>
 
     <item
         app:showAsAction="always"
         android:title="Category"
         android:icon="@drawable/ic_category_24"
-        android:iconTint="?attr/colorOnPrimary"
         android:id="@+id/menuEditCategory"/>
 
     <item
         app:showAsAction="always"
         android:title="Done"
         android:icon="@drawable/ic_done_24"
-        android:id="@+id/menuItemAdd"
-        android:iconTint="?attr/colorOnPrimary"/>
+        android:id="@+id/menuItemAdd"/>
 
 </menu>

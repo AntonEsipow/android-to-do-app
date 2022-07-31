@@ -22,4 +22,8 @@
     <string name="sort_order">Sort order</string>
     <string name="sort">Sort</string>
     <string name="perform_date">Perform date:</string>
+    <string name="choose_color">Choose color</string>
+    <string name="category_name">Book</string>
+    <string name="perform_datee">Perform date</string>
+    <string name="display_perform_date">21-06-2022</string>
 </resources>

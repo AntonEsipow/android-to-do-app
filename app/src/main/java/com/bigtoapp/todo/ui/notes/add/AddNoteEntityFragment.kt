@@ -182,7 +182,7 @@ class AddNoteEntityFragment: BaseFragment() {
         }
         // Setting up the event for when cancelled is clicked
         datePicker.addOnNegativeButtonClickListener {
-            Toast.makeText(requireActivity(), "${datePicker.headerText} is cancelled", Toast.LENGTH_LONG).show()
+            // NO message
         }
         // Setting up the event for when back button is pressed
         datePicker.addOnCancelListener {
