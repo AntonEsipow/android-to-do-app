@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ToDo</string>
+    <string name="hint_title">Заголовок</string>
+    <string name="hint_description">Добавить описание</string>
+    <string name="title">Заголовок</string>
+    <string name="category_name_text_view">Категория:</string>
+    <string name="no_items_hint">Нажмите на кнопку снизу чтобы добавить заметку</string>
+    <string name="no_items">Нет заметок!</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_notes">Заметки</string>
+    <string name="menu_category">Категории</string>
+    <string name="menu_settings">Настройки</string>
+
+    <string name="add_category">Вбрать категорию</string>
+    <string name="sort_order">Sort order</string>
+    <string name="sort">Сортировка</string>
+    <string name="perform_date">Сделать до:</string>
+    <string name="choose_color">Выбрать цвет</string>
+    <string name="display_perform_date">21-06-2022</string>
+
+    <!-- Sorting -->
+    <string name="sort_by_category">Category</string>
+    <string name="sort_by_perform_date">Perform date</string>
+    <string name="sort_by_current_date">Current date</string>
+    <string name="sort_display_all_notes">Все заметки</string>
+
+    <!-- Add categoryEntityFragment -->
+    <string name="rgb_red">Красный</string>
+    <string name="rgb_green">Зеленый</string>
+    <string name="rgb_blue">Синий</string>
+    <string name="title_error">* Обязательное поле</string>
+    <string name="add_success">Категория успешно добавлена!</string>
+    <string name="title_update_category">Изменить категорию</string>
+    <string name="title_add_category">Добавить категорию</string>
+
+    <!-- Category EpoxyController -->
+    <string name="title_no_category">Нет категорий!</string>
+    <string name="subtitle_no_category">Нажмите на кнопку снизу чтобы добавить категорию</string>
+    <string name="header_all_categories">Все категории</string>
+    // Categories Fragment
+    <string name="categories_fragment_header">Категории</string>
+</resources>

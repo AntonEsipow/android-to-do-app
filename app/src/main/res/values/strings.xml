@@ -23,7 +23,28 @@
     <string name="sort">Sort</string>
     <string name="perform_date">Perform date:</string>
     <string name="choose_color">Choose color</string>
-    <string name="category_name">Book</string>
-    <string name="perform_datee">Perform date</string>
     <string name="display_perform_date">21-06-2022</string>
+
+    <!-- Sorting -->
+    <string name="sort_by_category">Category</string>
+    <string name="sort_by_perform_date">Perform date</string>
+    <string name="sort_by_current_date">Current date</string>
+    <string name="sort_display_all_notes">All notes</string>
+
+    <!-- Add categoryEntityFragment -->
+    <string name="rgb_red">Red</string>
+    <string name="rgb_green">Green</string>
+    <string name="rgb_blue">Blue</string>
+    <string name="title_error">* Required field</string>
+    <string name="add_success">Category successfully added!</string>
+    <string name="title_update_category">Update category</string>
+    <string name="title_add_category">Add category</string>
+
+    <!-- Category EpoxyController -->
+    <string name="title_no_category">No categories!</string>
+    <string name="subtitle_no_category">Use the button below to add an category to your list</string>
+    <string name="header_all_categories">All categories</string>
+    // Categories Fragment
+    <string name="categories_fragment_header">Categories</string>
+
 </resources>

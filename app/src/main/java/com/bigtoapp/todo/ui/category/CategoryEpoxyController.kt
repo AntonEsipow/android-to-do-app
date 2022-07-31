@@ -1,9 +1,11 @@
 package com.bigtoapp.todo.ui.category
 
 import android.content.res.ColorStateList
+import android.content.res.Resources
 import android.graphics.Color
 import androidx.core.content.ContextCompat
 import com.airbnb.epoxy.EpoxyController
+import com.bigtoapp.todo.Localizations
 import com.bigtoapp.todo.R
 import com.bigtoapp.todo.addHeaderModel
 import com.bigtoapp.todo.database.entity.CategoryEntity
@@ -40,13 +42,13 @@ class CategoryEpoxyController(
         }
 
         if(categoryEntityList.isEmpty()) {
-            val title = "No categories!"
-            val subtitle = "Use the button below to add an category to your list"
+            val title = Localizations.noCategoryTitle
+            val subtitle = Localizations.noCategorySub
             EmptyStateEpoxyModel(title, subtitle).id("empty_state").addTo(this)
             return
         }
 
-        addHeaderModel("All categories")
+        addHeaderModel(Localizations.allCategoriesHeader)
         categoryEntityList.forEach { category ->
             CategoryEpoxyController
                 .CategoryEntityEpoxyModel(category, categoryEntityInterface).id(category.id).addTo(this)

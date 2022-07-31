@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.airbnb.epoxy.EpoxyTouchHelper
+import com.bigtoapp.todo.Localizations
 import com.bigtoapp.todo.R
 import com.bigtoapp.todo.database.entity.CategoryEntity
 import com.bigtoapp.todo.database.entity.NoteEntity
@@ -29,6 +30,7 @@ class CategoryFragment: BaseFragment(), CategoryEntityInterface {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mainActivity.supportActionBar?.title = Localizations.categoriesFragmentHeader
 
         hideKeyboard()
         binding.fab.setOnClickListener {

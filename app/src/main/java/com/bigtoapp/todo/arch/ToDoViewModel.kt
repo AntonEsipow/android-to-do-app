@@ -1,14 +1,19 @@
 package com.bigtoapp.todo.arch
 
+import android.content.res.Resources
 import android.provider.ContactsContract
+import androidx.core.content.res.TypedArrayUtils.getString
+import androidx.core.content.res.TypedArrayUtils.getText
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bigtoapp.todo.R
 import com.bigtoapp.todo.database.AppDatabase
 import com.bigtoapp.todo.database.entity.CategoryEntity
 import com.bigtoapp.todo.database.entity.NoteEntity
 import com.bigtoapp.todo.database.entity.NoteWithCategoryEntity
+import com.bigtoapp.todo.ui.MainActivity
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.collect
 import java.text.SimpleDateFormat
@@ -49,7 +54,6 @@ class ToDoViewModel: ViewModel() {
     private val _notesViewStateLiveData = MutableLiveData<NotesViewState>()
     val notesViewStateLiveData: LiveData<NotesViewState>
         get() = _notesViewStateLiveData
-
 
     fun init(appDatabase: AppDatabase) {
         repository = ToDoRepository(appDatabase)
@@ -167,6 +171,7 @@ class ToDoViewModel: ViewModel() {
         }
     }
 
+    // Strings
 
 
     data class NotesViewState(

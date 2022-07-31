@@ -7,6 +7,7 @@ import android.widget.SeekBar
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import com.bigtoapp.todo.Localizations
 import com.bigtoapp.todo.R
 import com.bigtoapp.todo.database.entity.CategoryEntity
 import com.bigtoapp.todo.database.entity.NoteEntity
@@ -64,6 +65,8 @@ class AddCategoryEntityFragment: BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val addCategoryText = Localizations.titleAddCategory
+        mainActivity.supportActionBar?.title = addCategoryText
 
         showKeyboard()
         sharedViewModel.transactionCompletedLiveData.observe(viewLifecycleOwner) { event ->
@@ -85,17 +88,17 @@ class AddCategoryEntityFragment: BaseFragment() {
         }
 
         binding.customColorPicker.redColorLayout.apply {
-            colorSliderTextView.text = "Red"
+            colorSliderTextView.text = Localizations.rgbRed
             seekBar.setOnSeekBarChangeListener(SeekBarListener(viewModel::onRedChange))
         }
 
         binding.customColorPicker.greenColorLayout.apply {
-            colorSliderTextView.text = "Green"
+            colorSliderTextView.text = Localizations.rgbGreen
             seekBar.setOnSeekBarChangeListener(SeekBarListener(viewModel::onGreenChange))
         }
 
         binding.customColorPicker.blueColorLayout.apply {
-            colorSliderTextView.text = "Blue"
+            colorSliderTextView.text = Localizations.rgbBlue
             seekBar.setOnSeekBarChangeListener(SeekBarListener(viewModel::onBlueChange))
         }
 
@@ -110,7 +113,7 @@ class AddCategoryEntityFragment: BaseFragment() {
     private fun saveCategoryEntityToTheDatabase() {
         val categoryName = binding.categoryNameText.text.toString().trim()
         if(categoryName.isEmpty()) {
-            binding.categoryNameText.error = "* Required field"
+            binding.categoryNameText.error = Localizations.titleError
             return
         } else {
             binding.categoryNameText.error = null
@@ -133,7 +136,8 @@ class AddCategoryEntityFragment: BaseFragment() {
             color = color
         )
         sharedViewModel.insertCategory(categoryEntity)
-        Toast.makeText(requireActivity(), "Category successfully added!", Toast.LENGTH_SHORT).show()
+        val addSuccess = Localizations.addSuccess
+        Toast.makeText(requireActivity(), addSuccess, Toast.LENGTH_SHORT).show()
     }
 
     private fun setupSelectedCategoryEntity() {
@@ -141,7 +145,8 @@ class AddCategoryEntityFragment: BaseFragment() {
             isInEditMode = true
 
             binding.categoryNameText.setText(categoryEntity.name)
-            mainActivity.supportActionBar?.title = "Update category"
+            val updateCategoryText = Localizations.titleUpdateCategory
+            mainActivity.supportActionBar?.title = updateCategoryText
         }
     }
 
@@ -162,11 +167,6 @@ class AddCategoryEntityFragment: BaseFragment() {
 
     private fun onMenuAddClicked() {
         saveCategoryEntityToTheDatabase()
-        if(isInEditMode) {
-            Toast.makeText(requireActivity(), "Updated!", Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(requireActivity(), "Added!", Toast.LENGTH_SHORT).show()
-        }
     }
 
     private fun setColorIfIsNull(): Int {
