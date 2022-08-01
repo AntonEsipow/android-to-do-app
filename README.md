@@ -3,7 +3,7 @@
 Для каждой категории можно настроить её индивидуальный цвет по RGB.
 <img
   src="https://user-images.githubusercontent.com/89312934/182166011-49c2f8f2-0d8c-4b12-97f6-e2f091eac955.png"
-  style="display: inline-block; margin: 0 auto; max-width: 20px">
+  style="max-width: 20px">
 ![notes](https://user-images.githubusercontent.com/89312934/182166011-49c2f8f2-0d8c-4b12-97f6-e2f091eac955.png)
 ![navigation](https://user-images.githubusercontent.com/89312934/182166345-0db1cfa9-badf-4cf0-b1fa-6ab9d37b0296.png)
 ![sorting](https://user-images.githubusercontent.com/89312934/182166381-52a16a23-5a82-4819-9195-d08095643838.png)
