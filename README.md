@@ -2,7 +2,7 @@
 Приложение которое позволяет создавать заметки и присвать им категории и дату, когда данную заметку нужно реализовать.
 Для каждой категории можно настроить её индивидуальный цвет по RGB.
 
-<img width="400px" src="https://user-images.githubusercontent.com/89312934/182166011-49c2f8f2-0d8c-4b12-97f6-e2f091eac955.png">
+<img width="400px" src="https://user-images.githubusercontent.com/89312934/182166011-49c2f8f2-0d8c-4b12-97f6-e2f091eac955.png"><img width="400px" src="https://user-images.githubusercontent.com/89312934/182166345-0db1cfa9-badf-4cf0-b1fa-6ab9d37b0296.png">
 <img width="400px" src="https://user-images.githubusercontent.com/89312934/182166345-0db1cfa9-badf-4cf0-b1fa-6ab9d37b0296.png">
 <img width="400px" src="https://user-images.githubusercontent.com/89312934/182166381-52a16a23-5a82-4819-9195-d08095643838.png">
 <img width="400px" src="https://user-images.githubusercontent.com/89312934/182166419-da2c24b2-0872-4f1b-8199-3fd906de62a8.png">
