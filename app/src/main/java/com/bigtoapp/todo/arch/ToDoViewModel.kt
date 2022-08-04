@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.collect
 import java.text.SimpleDateFormat
 import java.time.DayOfWeek
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -144,13 +145,17 @@ class ToDoViewModel: ViewModel() {
     private fun sortingByPerformDate(notes: List<NoteWithCategoryEntity>, dataList: ArrayList<NotesViewState.DataItem<*>>) {
         val dateFormatter = SimpleDateFormat("dd-MM-yyyy")
         var headerPerformDate = "01-01-2000"
-        val dayOfWeek = getDayOfWeek().padEnd(20, ' ')
         notes.sortedBy {
             it.noteEntity.performDate
         }.forEach { note ->
-            val performDate = dateFormatter.format(Date(note.noteEntity.performDate))
+            val fullDate = dateFormatter.format(Date(note.noteEntity.performDate))
+
+            val day = LocalDate.parse(fullDate, DateTimeFormatter.ofPattern("dd-MM-yyyy")).dayOfWeek
+            val dayOfWeek = getDayOfWeek(day).padEnd(25, ' ')
+            val performDate = "$dayOfWeek $fullDate"
+
             if(performDate != headerPerformDate) {
-                headerPerformDate = "$dayOfWeek $performDate"
+                headerPerformDate = performDate
                 val headerItem = NotesViewState.DataItem(
                     data = headerPerformDate,
                     isHeader = true
@@ -162,8 +167,7 @@ class ToDoViewModel: ViewModel() {
         }
     }
 
-    private fun getDayOfWeek(): String {
-        val dayOfWeek = LocalDate.now().dayOfWeek
+    private fun getDayOfWeek(dayOfWeek: DayOfWeek): String {
 
         return when(dayOfWeek) {
             DayOfWeek.MONDAY -> Localizations.monday
