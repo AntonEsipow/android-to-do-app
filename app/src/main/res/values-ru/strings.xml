@@ -69,4 +69,13 @@
     <!-- Default category -->
     <string name="def_category_name">Без категории</string>
 
+    <!-- Days of week -->
+    <string name="monday">Понедельник</string>
+    <string name="tuesday">Вторник</string>
+    <string name="wednesday">Среда</string>
+    <string name="thursday">Четверг</string>
+    <string name="friday">Пятница</string>
+    <string name="saturday">Суббота</string>
+    <string name="sunday">Воскресенье</string>
+
 </resources>

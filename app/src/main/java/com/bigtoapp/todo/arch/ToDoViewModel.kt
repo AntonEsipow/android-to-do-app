@@ -2,6 +2,7 @@ package com.bigtoapp.todo.arch
 
 import android.content.res.Resources
 import android.provider.ContactsContract
+import android.util.Log
 import androidx.core.content.res.TypedArrayUtils.getString
 import androidx.core.content.res.TypedArrayUtils.getText
 import androidx.lifecycle.LiveData
@@ -18,6 +19,8 @@ import com.bigtoapp.todo.ui.MainActivity
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.collect
 import java.text.SimpleDateFormat
+import java.time.DayOfWeek
+import java.time.LocalDate
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -47,7 +50,7 @@ class ToDoViewModel: ViewModel() {
         get() = _categoryEntitiesLiveData
 
     // Notes
-    var currentSort: NotesViewState.Sort = NotesViewState.Sort.CATEGORY
+    var currentSort: NotesViewState.Sort = NotesViewState.Sort.PERFORM
         set(value) {
             field = value
             updateHomeViewState(_noteWithCategoryEntityLiveData.value!!)
@@ -88,8 +91,8 @@ class ToDoViewModel: ViewModel() {
         when(currentSort) {
             NotesViewState.Sort.CURRENT -> sortingByCurrentDate(notes, dataList)
             NotesViewState.Sort.CATEGORY -> sortingByCategory(notes, dataList)
-            NotesViewState.Sort.ALL -> sortingDisplayAllNotes(notes, dataList)
             NotesViewState.Sort.PERFORM -> sortingByPerformDate(notes, dataList)
+            else -> {}
         }
 
         _notesViewStateLiveData.postValue(
@@ -138,29 +141,16 @@ class ToDoViewModel: ViewModel() {
         }
     }
 
-    private fun sortingDisplayAllNotes(notes: List<NoteWithCategoryEntity>, dataList: ArrayList<NotesViewState.DataItem<*>>) {
-        val headerItem = NotesViewState.DataItem(
-            data = Localizations.sortDisplayAllNotes,
-            isHeader = true
-        )
-        dataList.add(headerItem)
-        notes.sortedByDescending {
-            it.noteEntity.createdAt
-        }.forEach { note ->
-            val dataItem = NotesViewState.DataItem(data = note)
-            dataList.add(dataItem)
-        }
-    }
-
     private fun sortingByPerformDate(notes: List<NoteWithCategoryEntity>, dataList: ArrayList<NotesViewState.DataItem<*>>) {
         val dateFormatter = SimpleDateFormat("dd-MM-yyyy")
         var headerPerformDate = "01-01-2000"
+        val dayOfWeek = getDayOfWeek().padEnd(20, ' ')
         notes.sortedBy {
             it.noteEntity.performDate
         }.forEach { note ->
             val performDate = dateFormatter.format(Date(note.noteEntity.performDate))
             if(performDate != headerPerformDate) {
-                headerPerformDate = performDate
+                headerPerformDate = "$dayOfWeek $performDate"
                 val headerItem = NotesViewState.DataItem(
                     data = headerPerformDate,
                     isHeader = true
@@ -172,9 +162,22 @@ class ToDoViewModel: ViewModel() {
         }
     }
 
+    private fun getDayOfWeek(): String {
+        val dayOfWeek = LocalDate.now().dayOfWeek
+
+        return when(dayOfWeek) {
+            DayOfWeek.MONDAY -> Localizations.monday
+            DayOfWeek.TUESDAY -> Localizations.tuesday
+            DayOfWeek.WEDNESDAY -> Localizations.wednesday
+            DayOfWeek.THURSDAY -> Localizations.thursday
+            DayOfWeek.FRIDAY -> Localizations.friday
+            DayOfWeek.SATURDAY -> Localizations.saturday
+            DayOfWeek.SUNDAY -> Localizations.sunday
+            else -> ""
+        }
+    }
+
     // Strings
-
-
     data class NotesViewState(
         val dataList: List<DataItem<*>> = emptyList(),
         val isLoading: Boolean = false,
@@ -188,8 +191,7 @@ class ToDoViewModel: ViewModel() {
         enum class Sort(val displayName: String) {
             CATEGORY(Localizations.sortByCategory),
             PERFORM(Localizations.sortByPerformDate),
-            CURRENT(Localizations.sortByCurrentDate),
-            ALL(Localizations.sortDisplayAllNotes)
+            CURRENT(Localizations.sortByCurrentDate)
         }
     }
 

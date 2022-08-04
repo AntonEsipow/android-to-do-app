@@ -46,5 +46,14 @@ class Localizations {
 
         // Def category
         val defCategoryName = getString(R.string.def_category_name)
+
+        // Day of week
+        val monday = getString(R.string.monday)
+        val tuesday = getString(R.string.tuesday)
+        val wednesday = getString(R.string.wednesday)
+        val thursday = getString(R.string.thursday)
+        val friday = getString(R.string.friday)
+        val saturday = getString(R.string.saturday)
+        val sunday = getString(R.string.sunday)
     }
 }
