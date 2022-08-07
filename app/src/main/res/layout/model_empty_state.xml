@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         tools:text="@string/no_items"
         android:textAllCaps="true"
-        android:textColor="?attr/colorOnSurface"
+        android:textColor="?attr/colorOnBackground"
         android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/subtitleTextView"

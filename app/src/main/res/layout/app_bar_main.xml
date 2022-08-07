@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/background"
-        app:titleTextColor="?attr/colorOnSurface"
+        app:titleTextColor="?attr/colorOnBackground"
         app:elevation="0dp"
         android:theme="@style/Theme.ToDo.AppBarOverlay">
 
@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/background"
-            app:titleTextColor="?attr/colorOnSurface"
+            app:titleTextColor="?attr/colorOnBackground"
             android:backgroundTint="?attr/background"
             app:popupTheme="@style/Theme.ToDo.PopupOverlay" />
 

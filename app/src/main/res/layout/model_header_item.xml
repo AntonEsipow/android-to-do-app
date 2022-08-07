@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:background="?attr/background"
         android:gravity="center"
-        android:textColor="?attr/colorOnSurface"
+        android:textColor="?attr/colorOnBackground"
         android:padding="6dp"
         android:text="Header"
         android:textSize="22sp"
